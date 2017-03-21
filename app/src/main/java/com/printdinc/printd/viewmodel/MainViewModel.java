@@ -88,46 +88,21 @@ public class MainViewModel implements ViewModel {
                                                 .setThingiverseService(ThingiverseServiceGenerator
                                                         .createService(ThingiverseService.class, m.group(2) + " " + m.group(1)));
                                     }
+
                                     context.startActivity(ThingiverseCollectionsActivity.newIntent(context));
                                 }
                             }
                         });
-
-
-//                Call<String> call = thingiverseAuthService.getAccessToken(context.getString(R.string.client_id), context.getString(R.string.client_secret), code);
-//
-//                call.enqueue(new Callback<String>() {
-//                    @Override
-//                    public void onResponse(Call<String> call, Response<String> response) {
-//                        String token = response.body();
-//                        if (token != null)
-//                        {
-//                            // extract the token from the response
-//                            Matcher m = token_parse.matcher(token);
-//
-//                            if (m.find())
-//                            {
-//                                PrintdApplication.get(context)
-//                                        .setThingiverseService(ThingiverseServiceGenerator
-//                                                .createService(ThingiverseService.class, m.group(2) + " " + m.group(1)));
-//                            }
-//                            progressVisibility.set(View.INVISIBLE);
-//                            context.startActivity(ThingiverseCollectionsActivity.newIntent(context));
-//                        }
-//                        progressVisibility.set(View.INVISIBLE);
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<String> call, Throwable t) {
-//                        progressVisibility.set(View.INVISIBLE);
-//                    }
-//                });
 
             } else if (uri.getQueryParameter("error") != null) {
                 // show an error message here
                 progressVisibility.set(View.INVISIBLE);
             }
         }
+    }
+
+    public void resumeActivity() {
+        progressVisibility.set(View.INVISIBLE);
     }
 
     @Override
