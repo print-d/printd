@@ -2,13 +2,12 @@ package com.printdinc.printd.service;
 
 import com.printdinc.printd.model.ThingiverseCollection;
 import com.printdinc.printd.model.ThingiverseCollectionThing;
-import com.printdinc.printd.model.User;
+import com.printdinc.printd.model.ThingiverseThingFile;
 
 import java.util.List;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import retrofit2.http.Url;
 import rx.Observable;
 
 public interface ThingiverseService {
@@ -19,6 +18,9 @@ public interface ThingiverseService {
     @GET("/collections/{id}/things")
     Observable<List<ThingiverseCollectionThing>> collectionThings(@Path("id") String collection_id);
 
-    @GET
-    Observable<User> userFromUrl(@Url String userUrl);
+    @GET("/things/{id}/files")
+    Observable<List<ThingiverseThingFile>> thingFiles(@Path("id") String thing_id);
+
+    @GET("/files/{id}/download")
+    Observable<Object> downloadFile(@Path("id") String file_id);
 }

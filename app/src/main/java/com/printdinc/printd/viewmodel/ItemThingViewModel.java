@@ -13,7 +13,7 @@ import com.printdinc.printd.view.ThingiverseThingActivity;
 
 public class ItemThingViewModel extends BaseObservable implements ViewModel {
 
-    private static final String TAG = "ItemCollectionViewModel";
+    private static final String TAG = "ItemThingViewModel";
 
     private ThingiverseCollectionThing collectionThing;
     private Context context;

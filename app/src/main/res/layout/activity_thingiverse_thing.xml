@@ -37,24 +37,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/layout_header"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/text_repo_title"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                android:paddingTop="12dp"
-                android:text="@{viewModel.name}"
-                android:textSize="20sp"
-                tools:text="Thing Name" />
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_gravity="left"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/image_owner"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    app:imageUrl="@{viewModel.thumbnailUrl}"
+                    />
+
+                <TextView
+                    android:id="@+id/text_repo_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:text="@{viewModel.name}"
+                    android:textSize="24sp"
+                    tools:text="Thing Name" />
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -66,23 +81,43 @@
                 android:id="@+id/layout_owner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal"
-                app:visibility="@{viewModel.ownerLayoutVisibility}"
-                tools:visibility="visible">
+                android:orientation="horizontal">
+
+                <ProgressBar
+                    android:id="@+id/progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    app:visibility="@{viewModel.progressVisibility}"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/files_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingBottom="@dimen/vertical_margin_half"
+                    android:paddingTop="@dimen/vertical_margin_half"
+                    android:scrollbars="vertical"
+                    app:visibility="@{viewModel.recyclerViewVisibility}"
+                    tools:listitem="@layout/item_file"/>
 
             </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/image_owner"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_width="125dp"
-                android:layout_height="125dp"
-                app:imageUrl="@{viewModel.thumbnailUrl}"
-                />
-
         </LinearLayout>
+
+        <!--<android.support.design.widget.FloatingActionButton-->
+            <!--android:id="@+id/myFAB"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_gravity="end|bottom"-->
+            <!--android:layout_margin="10dp"-->
+            <!--android:clickable="true"-->
+            <!--android:visibility="@{viewModel.printButtonVisibility}"-->
+            <!--android:onClick="@{viewModel.onClickPrint}"-->
+            <!--android:src="@drawable/ic_send" />-->
 
     </RelativeLayout>
 </layout>

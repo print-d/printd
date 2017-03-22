@@ -4,15 +4,15 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by andrewthomas on 3/9/17.
+ * Created by andrewthomas on 3/21/17.
  */
 
-public class ThingiverseCollectionThing implements Parcelable {
+public class ThingiverseThingFile implements Parcelable {
     public long id;
     public String name;
     public String thumbnail;
 
-    public ThingiverseCollectionThing() {
+    public ThingiverseThingFile() {
     }
 
     @Override
@@ -27,19 +27,19 @@ public class ThingiverseCollectionThing implements Parcelable {
         dest.writeString(this.thumbnail);
     }
 
-    protected ThingiverseCollectionThing(Parcel in) {
+    protected ThingiverseThingFile(Parcel in) {
         this.id = in.readLong();
         this.name = in.readString();
         this.thumbnail = in.readString();
     }
 
-    public static final Parcelable.Creator<ThingiverseCollectionThing> CREATOR = new Parcelable.Creator<ThingiverseCollectionThing>() {
-        public ThingiverseCollectionThing createFromParcel(Parcel source) {
-            return new ThingiverseCollectionThing(source);
+    public static final Parcelable.Creator<ThingiverseThingFile> CREATOR = new Parcelable.Creator<ThingiverseThingFile>() {
+        public ThingiverseThingFile createFromParcel(Parcel source) {
+            return new ThingiverseThingFile(source);
         }
 
-        public ThingiverseCollectionThing[] newArray(int size) {
-            return new ThingiverseCollectionThing[size];
+        public ThingiverseThingFile[] newArray(int size) {
+            return new ThingiverseThingFile[size];
         }
     };
 
@@ -48,7 +48,7 @@ public class ThingiverseCollectionThing implements Parcelable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ThingiverseCollectionThing that = (ThingiverseCollectionThing) o;
+        ThingiverseThingFile that = (ThingiverseThingFile) o;
 
         if (id != that.id) return false;
 
