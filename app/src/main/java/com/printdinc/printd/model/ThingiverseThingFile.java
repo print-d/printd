@@ -11,6 +11,7 @@ public class ThingiverseThingFile implements Parcelable {
     public long id;
     public String name;
     public String thumbnail;
+    public String download_url;
 
     public ThingiverseThingFile() {
     }
@@ -25,12 +26,14 @@ public class ThingiverseThingFile implements Parcelable {
         dest.writeLong(this.id);
         dest.writeString(this.name);
         dest.writeString(this.thumbnail);
+        dest.writeString(this.download_url);
     }
 
     protected ThingiverseThingFile(Parcel in) {
         this.id = in.readLong();
         this.name = in.readString();
         this.thumbnail = in.readString();
+        this.download_url = in.readString();
     }
 
     public static final Parcelable.Creator<ThingiverseThingFile> CREATOR = new Parcelable.Creator<ThingiverseThingFile>() {
@@ -54,6 +57,7 @@ public class ThingiverseThingFile implements Parcelable {
 
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (thumbnail != null ? !thumbnail.equals(that.thumbnail) : that.thumbnail != null) return false;
+        if (download_url != null ? !download_url.equals(that.download_url) : that.download_url != null) return false;
         return true;
     }
 
@@ -62,6 +66,7 @@ public class ThingiverseThingFile implements Parcelable {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (thumbnail != null ? thumbnail.hashCode() : 0);
+        result = 31 * result + (download_url != null ? download_url.hashCode() : 0);
 
         return result;
     }
