@@ -53,13 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToThingiverse (View view) {
-        goToUrl ( "http://thingiverse.com/");
-    }
-
-    private void goToUrl (String url) {
-        Uri uriUrl = Uri.parse(url);
-        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-        startActivity(launchBrowser);
+        mainViewModel.goToUrl ( getString(R.string.thingiverseURI));
     }
 
     @Override

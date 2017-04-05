@@ -13,4 +13,5 @@
     <string name="stlname">printdDownload.stl</string>
     <string name="location">local</string>
     <string name="sliceCommand">slice</string>
+    <string name="thingiverseURI">http://www.thingiverse.com/</string>
 </resources>

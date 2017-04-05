@@ -107,6 +107,12 @@ public class MainViewModel implements ViewModel {
         progressVisibility.set(View.INVISIBLE);
     }
 
+    public void goToUrl (String url) {
+        Uri uriUrl = Uri.parse(url);
+        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+        context.startActivity(launchBrowser);
+    }
+
     @Override
     public void destroy() {
         if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
