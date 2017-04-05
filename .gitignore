@@ -8,3 +8,5 @@
 /captures
 .externalNativeBuild
 private_strings.xml
+/.idea
+/.idea/*
