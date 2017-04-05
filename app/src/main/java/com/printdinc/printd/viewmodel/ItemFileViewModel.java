@@ -12,6 +12,9 @@ import android.webkit.MimeTypeMap;
 
 import com.ipaulpro.afilechooser.utils.FileUtils;
 import com.printdinc.printd.PrintdApplication;
+import com.printdinc.printd.R;
+import com.printdinc.printd.model.Position;
+import com.printdinc.printd.model.SliceCommand;
 import com.printdinc.printd.model.ThingiverseThingFile;
 import com.printdinc.printd.service.OctoprintService;
 import com.printdinc.printd.service.ThingiverseService;
@@ -29,6 +32,9 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 
 
 /**
@@ -41,6 +47,7 @@ public class ItemFileViewModel extends BaseObservable implements ViewModel {
 
     private ThingiverseThingFile thingFile;
     private Context context;
+    private Subscription subscription;
 
     public ItemFileViewModel(Context context, ThingiverseThingFile thingFile) {
         this.thingFile = thingFile;
@@ -95,7 +102,7 @@ public class ItemFileViewModel extends BaseObservable implements ViewModel {
 
                     boolean writtenToDisk = writeResponseBodyToDisk(response.body());
 
-                    uploadFile(Uri.fromFile(new File(context.getExternalFilesDir(null) + File.separator + "printdDownload.stl")));
+                    uploadFile(Uri.fromFile(new File(context.getExternalFilesDir(null) + File.separator + context.getString(R.string.stlname))));
                     Log.d(TAG, "file download was a success? " + writtenToDisk);
                 } else {
                     Log.d(TAG, "server contact failed");
@@ -109,9 +116,42 @@ public class ItemFileViewModel extends BaseObservable implements ViewModel {
         });
     }
 
+    private void printItem(String filename, Position position) {
+        try {
+            if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
+            PrintdApplication application = PrintdApplication.get(context);
+            OctoprintService octoprintService = application.getOctoprintService();
+            subscription = octoprintService.issuePrintCommand(context.getString(R.string.location), filename, new SliceCommand(context.getString(R.string.sliceCommand), position, true))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(application.defaultSubscribeScheduler())
+                    .subscribe(new Subscriber<ResponseBody>() {
+                        @Override
+                        public void onCompleted() {
+                            Log.e(TAG, "completed!");
+                        }
+
+                        @Override
+                        public void onError(Throwable error) {
+                            Log.e(TAG, "Error printing", error);
+
+                        }
+
+                        @Override
+                        public void onNext(ResponseBody r) {
+                            Log.i(TAG, "ResponseBody loaded " + r);
+                        }
+                    });
+        }
+        catch(Exception e)
+        {
+            Object a = e;
+        }
+
+    }
+
     private boolean writeResponseBodyToDisk(ResponseBody body) {
         try {
-            File futureStudioIconFile = new File(context.getExternalFilesDir(null) + File.separator + "printdDownload.stl");
+            File futureStudioIconFile = new File(context.getExternalFilesDir(null) + File.separator + context.getString(R.string.stlname));
 
             InputStream inputStream = null;
             OutputStream outputStream = null;
@@ -182,12 +222,14 @@ public class ItemFileViewModel extends BaseObservable implements ViewModel {
 
 
             // finally, execute the request
-            Call<ResponseBody> call = service.uploadFile("local", body);
+            Call<ResponseBody> call = service.uploadFile(context.getString(R.string.location), body);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call,
                                        Response<ResponseBody> response) {
                     Log.v("Upload", "success");
+
+                    printItem(context.getString(R.string.stlname), new Position(100l,100l));
                 }
 
                 @Override
@@ -212,7 +254,9 @@ public class ItemFileViewModel extends BaseObservable implements ViewModel {
 
     @Override
     public void destroy() {
-        //In this case destroy doesn't need to do anything because there is not async calls
+        if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
+        subscription = null;
+        context = null;
     }
 }
 

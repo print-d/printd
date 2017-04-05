@@ -8,4 +8,7 @@
     <string name="default_info_message">Enter a GitHub username above to see its repositories</string>
     <string name="login_button">Print</string>
     <string name="me_user">me</string>
+    <string name="stlname">printdDownload.stl</string>
+    <string name="location">local</string>
+    <string name="sliceCommand">slice</string>
 </resources>
