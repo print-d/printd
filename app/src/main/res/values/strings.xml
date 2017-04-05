@@ -10,4 +10,7 @@
     <string name="me_user">me</string>
     <string name="action_settings">Settings</string>
     <string name="thingiverse">Thingiverse</string>
+    <string name="stlname">printdDownload.stl</string>
+    <string name="location">local</string>
+    <string name="sliceCommand">slice</string>
 </resources>

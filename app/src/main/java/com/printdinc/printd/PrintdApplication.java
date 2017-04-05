@@ -3,18 +3,21 @@ package com.printdinc.printd;
 import android.app.Application;
 import android.content.Context;
 
-import rx.Scheduler;
-import rx.schedulers.Schedulers;
-
+import com.printdinc.printd.service.OctoprintService;
+import com.printdinc.printd.service.OctoprintServiceGenerator;
 import com.printdinc.printd.service.ThingiverseAuthService;
 import com.printdinc.printd.service.ThingiverseAuthServiceGenerator;
-import com.printdinc.printd.service.ThingiverseServiceGenerator;
 import com.printdinc.printd.service.ThingiverseService;
+import com.printdinc.printd.service.ThingiverseServiceGenerator;
+
+import rx.Scheduler;
+import rx.schedulers.Schedulers;
 
 public class PrintdApplication extends Application {
 
     private ThingiverseService thingiverseService;
     private ThingiverseAuthService thingiverseAuthService;
+    private OctoprintService octoprintService;
     private Scheduler defaultSubscribeScheduler;
 
     public static PrintdApplication get(Context context) {
@@ -37,12 +40,23 @@ public class PrintdApplication extends Application {
         return thingiverseAuthService;
     }
 
+    public OctoprintService getOctoprintService() {
+        if (octoprintService == null) {
+            octoprintService =
+                    OctoprintServiceGenerator.createService(OctoprintService.class);
+        }
+        return octoprintService;
+    }
+
     //For setting mocks during testing & after getting auth token
     public void setThingiverseService(ThingiverseService thingiverseService) {
         this.thingiverseService = thingiverseService;
     }
     public void setThingiverseAuthService(ThingiverseAuthService thingiverseAuthService) {
         this.thingiverseAuthService = thingiverseAuthService;
+    }
+    public void setOctoprintService(OctoprintService octoprintService) {
+        this.octoprintService = octoprintService;
     }
 
     public Scheduler defaultSubscribeScheduler() {

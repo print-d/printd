@@ -4,6 +4,8 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -12,18 +14,15 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class OctoprintServiceGenerator {
 
-    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
+            .readTimeout(120, TimeUnit.SECONDS)
+            .connectTimeout(120, TimeUnit.SECONDS);
 
     private static Retrofit.Builder builder =
             new Retrofit.Builder()
-                    .baseUrl(findApiBaseUrl())
+                    .baseUrl("http://192.168.0.108/")
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(new Gson()));
-
-    private static String findApiBaseUrl() {
-
-        return "";
-    }
 
     public static <S> S createService(Class<S> serviceClass) {
         return createService(serviceClass, null);
@@ -36,8 +35,8 @@ public class OctoprintServiceGenerator {
 
         if (!TextUtils.isEmpty(authToken)) {
 
-            AuthenticationInterceptor interceptor =
-                    new AuthenticationInterceptor(authToken);
+            AuthenticationAPIKeyInterceptor interceptor =
+                    new AuthenticationAPIKeyInterceptor(authToken);
 
             if (!httpClient.interceptors().contains(interceptor)) {
                 httpClient.addInterceptor(interceptor);

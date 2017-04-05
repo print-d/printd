@@ -7,8 +7,10 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 
-import com.printdinc.printd.R;
 import com.printdinc.printd.PrintdApplication;
+import com.printdinc.printd.R;
+import com.printdinc.printd.service.OctoprintService;
+import com.printdinc.printd.service.OctoprintServiceGenerator;
 import com.printdinc.printd.service.ThingiverseAuthService;
 import com.printdinc.printd.service.ThingiverseAuthServiceGenerator;
 import com.printdinc.printd.service.ThingiverseService;
@@ -114,6 +116,8 @@ public class MainViewModel implements ViewModel {
 
     public void onClickLogin(View view) {
         thingiverseInitLogin();
+        PrintdApplication application = PrintdApplication.get(context);
+        application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, context.getString(R.string.andrews_octoprint_api_secret)));
     }
     public void thingiverseInitLogin() {
         Intent intent = new Intent(
