@@ -10,3 +10,5 @@
 private_strings.xml
 /.idea
 /.idea/*
+/aFileChooser/build
+/aFileChooser/build/*
