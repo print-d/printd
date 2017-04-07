@@ -14,3 +14,6 @@ private_strings.xml
 /.idea/*
 /aFileChooser/build
 /aFileChooser/build/*
+gradle-wrapper.jar
+gradlew
+gradlew.bat
