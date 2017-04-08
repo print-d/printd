@@ -61,6 +61,7 @@ public class MainViewModel implements ViewModel {
                 PrintdApplication application = PrintdApplication.get(context);
                 ThingiverseAuthService thingiverseAuthService = application.getThingiverseAuthService();
 
+                //TODO reshape this call to be to Heroku server instead of thingiverse
                 subscription = thingiverseAuthService.getAccessToken(context.getString(R.string.client_id), context.getString(R.string.client_secret), code)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(application.defaultSubscribeScheduler())
@@ -127,6 +128,7 @@ public class MainViewModel implements ViewModel {
 
     private void octoprintInit() {
         PrintdApplication application = PrintdApplication.get(context);
+        //TODO get API key from Heroku
         application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, context.getString(R.string.andrews_octoprint_api_secret)));
     }
 
