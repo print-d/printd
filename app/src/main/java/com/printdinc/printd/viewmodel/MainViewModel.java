@@ -122,9 +122,14 @@ public class MainViewModel implements ViewModel {
 
     public void onClickLogin(View view) {
         thingiverseInitLogin();
+        octoprintInit();
+    }
+
+    private void octoprintInit() {
         PrintdApplication application = PrintdApplication.get(context);
         application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, context.getString(R.string.andrews_octoprint_api_secret)));
     }
+
     public void thingiverseInitLogin() {
         Intent intent = new Intent(
                 Intent.ACTION_VIEW,
