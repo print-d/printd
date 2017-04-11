@@ -1,7 +1,7 @@
 package com.printdinc.printd.viewmodel;
 
 import android.content.Context;
-import android.database.Observable;
+import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.util.Log;
 import android.view.View;
@@ -30,7 +30,7 @@ public class BedLevelViewModel implements ViewModel {
     private Subscription subscription;
     private int current_step;
 
-    public Observable<String> buttonText;
+    public ObservableField<String> buttonText;
 
     public ObservableInt progressVisibility;
 
@@ -39,6 +39,7 @@ public class BedLevelViewModel implements ViewModel {
         this.context = context;
         progressVisibility = new ObservableInt(View.INVISIBLE);
         firstStep();
+        buttonText = new ObservableField<String>("Leggo");
 
     }
 
