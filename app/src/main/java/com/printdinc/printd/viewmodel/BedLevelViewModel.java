@@ -1,20 +1,17 @@
 package com.printdinc.printd.viewmodel;
 
 import android.content.Context;
-import android.database.Observable;
+import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
-import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.View;
 
 import com.printdinc.printd.PrintdApplication;
-import com.printdinc.printd.R;
 import com.printdinc.printd.model.PrintHeadCommand;
 import com.printdinc.printd.service.OctoprintService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.regex.Pattern;
 
 import okhttp3.ResponseBody;
 import rx.Subscriber;
@@ -33,17 +30,16 @@ public class BedLevelViewModel implements ViewModel {
     private Subscription subscription;
     private int current_step;
 
-    public Observable<String> buttonText;
+    public ObservableField<String> buttonText;
 
     public ObservableInt progressVisibility;
-
-    Pattern token_parse = Pattern.compile("access_token=(.+?)&token_type=(\\w+)");
 
 
     public BedLevelViewModel(Context context) {
         this.context = context;
         progressVisibility = new ObservableInt(View.INVISIBLE);
         firstStep();
+        buttonText = new ObservableField<String>("Leggo");
 
     }
 
