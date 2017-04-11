@@ -83,6 +83,21 @@
             android:layout_centerHorizontal="true"
             android:onClick="goToThingiverse"/>
 
+        <Button
+            android:id="@+id/btn_bedlevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bedlevel"
+            android:clickable="true"
+            android:autoLink="web"
+            android:cursorVisible="true"
+            android:linksClickable="true"
+            android:onClick="@{viewModel.onClickBedLevel}"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/btn_thingiverse"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="93dp" />
+
         </RelativeLayout>
 
     </RelativeLayout>

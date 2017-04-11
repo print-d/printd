@@ -1,9 +1,11 @@
 package com.printdinc.printd.viewmodel;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.ObservableInt;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 
@@ -15,6 +17,7 @@ import com.printdinc.printd.service.ThingiverseAuthService;
 import com.printdinc.printd.service.ThingiverseAuthServiceGenerator;
 import com.printdinc.printd.service.ThingiverseService;
 import com.printdinc.printd.service.ThingiverseServiceGenerator;
+import com.printdinc.printd.view.BedLevelActivity;
 import com.printdinc.printd.view.ThingiverseCollectionsActivity;
 
 import java.util.regex.Matcher;
@@ -123,6 +126,28 @@ public class MainViewModel implements ViewModel {
     public void onClickLogin(View view) {
         thingiverseInitLogin();
         octoprintInit();
+    }
+    public void onClickBedLevel(View view) {
+        octoprintInit();
+        promptBedLevel();
+    }
+
+    public void promptBedLevel() {
+        new AlertDialog.Builder(context)
+                .setIcon(0)
+                .setTitle("Bed level")
+                .setMessage("Would you like to start bed leveling?")
+                .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        context.startActivity(BedLevelActivity.newIntent(context));
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.no), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                    }
+                })
+                .show();
     }
 
     private void octoprintInit() {

@@ -1,5 +1,6 @@
 package com.printdinc.printd.service;
 
+import com.printdinc.printd.model.PrintHeadCommand;
 import com.printdinc.printd.model.SliceCommand;
 
 import okhttp3.MultipartBody;
@@ -23,4 +24,12 @@ public interface OctoprintService {
     Observable<ResponseBody> issuePrintCommand(@Path("location") String location,
                                                @Path("filename") String filename,
                                                @Body SliceCommand sc);
+
+    @POST("api/printer/printhead")
+    Observable<ResponseBody> printHeadHomeCommand(@Body PrintHeadCommand phc);
+
+    //@POST("api/printer/printhead")
+    //Observable<ResponseBody> printJogCommand(@Body PrintHeadCommand phc);
+
+
 }
