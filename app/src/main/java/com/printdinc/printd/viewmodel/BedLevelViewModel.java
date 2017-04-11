@@ -58,12 +58,11 @@ public class BedLevelViewModel implements ViewModel {
         context = null;
     }
 
-    private void firstStep() {
+    private void doPrintHeadCommand(PrintHeadCommand phc) {
         current_step = 1;
         if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
         PrintdApplication application = PrintdApplication.get(context);
         OctoprintService octoprintService = application.getOctoprintService();
-        PrintHeadCommand phc = new PrintHeadCommand("home", new ArrayList<String>(Arrays.asList("x", "y", "z")), 0, 0, 0);
         subscription = octoprintService.printHeadHomeCommand(phc)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(application.defaultSubscribeScheduler())
@@ -75,8 +74,7 @@ public class BedLevelViewModel implements ViewModel {
 
                     @Override
                     public void onError(Throwable error) {
-                        Log.e(TAG, "Error printing", error);
-
+                        Log.e(TAG, "Error: ", error);
                     }
 
                     @Override
@@ -84,10 +82,17 @@ public class BedLevelViewModel implements ViewModel {
                         Log.i(TAG, "ResponseBody loaded " + r);
                     }
                 });
-
     }
 
+    private void firstStep() {
+        PrintHeadCommand phc = new PrintHeadCommand("home", new ArrayList<String>(Arrays.asList("x", "y", "z")), 0, 0, 0);
+        doPrintHeadCommand(phc);
+    }
 
+    private PrintHeadCommand jogCommand(int x, int y, int z) {
+        PrintHeadCommand phc = new PrintHeadCommand("jog", new ArrayList<String>(Arrays.asList("x", "y", "z")), x, y, z);
+        return phc;
+    }
     public void onClickNext(View view) {
 
         if (current_step > 4){
