@@ -18,6 +18,7 @@ public class OctoprintServiceGenerator {
             .readTimeout(120, TimeUnit.SECONDS)
             .connectTimeout(120, TimeUnit.SECONDS);
 
+    //TODO use Network Discovery Service to find OctoPrint
     private static Retrofit.Builder builder =
             new Retrofit.Builder()
                     .baseUrl("http://192.168.0.108/")
