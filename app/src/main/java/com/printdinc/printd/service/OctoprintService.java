@@ -35,7 +35,7 @@ public interface OctoprintService {
                                                @Body SliceCommand sc);
 
     @POST("api/printer/printhead")
-    Observable<ResponseBody> printHeadHomeCommand(@Body PrintHeadCommand phc);
+    Observable<ResponseBody> printHeadCommand(@Body PrintHeadCommand phc);
 
     //@POST("api/printer/printhead")
     //Observable<ResponseBody> printJogCommand(@Body PrintHeadCommand phc);

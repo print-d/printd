@@ -32,6 +32,10 @@ public class PrintHeadCommand {
     @Expose
     private long z;
 
+    @SerializedName("absolute")
+    @Expose
+    private boolean absolute;
+
     public String getCommand() {
         return command;
     }
@@ -44,11 +48,14 @@ public class PrintHeadCommand {
 
     public long getZ() { return z; }
 
-    public PrintHeadCommand(String command, ArrayList<String> axes, long x, long y, long z) {
+    public boolean getAbsolute() { return absolute; }
+
+    public PrintHeadCommand(String command, ArrayList<String> axes, long x, long y, long z, boolean absolute) {
         this.command = command;
         this.axes = axes;
         this.x = x;
         this.y = y;
         this.z = z;
+        this.absolute = absolute;
     }
 }

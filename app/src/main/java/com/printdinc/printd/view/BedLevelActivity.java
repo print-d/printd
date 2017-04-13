@@ -27,7 +27,7 @@ public class BedLevelActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_bed_level);
-        bedLevelViewModel = new BedLevelViewModel(this);
+        bedLevelViewModel = new BedLevelViewModel(this, this);
         binding.setViewModel(bedLevelViewModel);
         setSupportActionBar(binding.toolbar);
 
