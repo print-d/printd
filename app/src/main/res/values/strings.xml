@@ -11,4 +11,11 @@
     <string name="stlname">printdDownload.stl</string>
     <string name="location">local</string>
     <string name="sliceCommand">slice</string>
+    <string name="accountUsername">Username</string>
+    <string name="accountPassword">Password</string>
+    <string name="confirmPassword">Confirm</string>
+    <string name="octoKey">OctoPrint API Key</string>
+    <string name="printerMake">3D Printer Make</string>
+    <string name="printerModel">3D Printer Model</string>
+    <string name="createAccount">Create</string>
 </resources>

@@ -50,6 +50,7 @@
             android:launchMode="singleTop"
             android:parentActivityName=".view.ThingiverseCollectionActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".viewmodel.CreateAccountViewModel"></activity>
     </application>
 
 </manifest>
