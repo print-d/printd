@@ -1,9 +1,11 @@
 package com.printdinc.printd.viewmodel;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.ObservableInt;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 
@@ -15,6 +17,7 @@ import com.printdinc.printd.service.ThingiverseAuthService;
 import com.printdinc.printd.service.ThingiverseAuthServiceGenerator;
 import com.printdinc.printd.service.ThingiverseService;
 import com.printdinc.printd.service.ThingiverseServiceGenerator;
+import com.printdinc.printd.view.BedLevelActivity;
 import com.printdinc.printd.view.ThingiverseCollectionsActivity;
 
 import java.util.regex.Matcher;
@@ -61,6 +64,7 @@ public class MainViewModel implements ViewModel {
                 PrintdApplication application = PrintdApplication.get(context);
                 ThingiverseAuthService thingiverseAuthService = application.getThingiverseAuthService();
 
+                //TODO reshape this call to be to Heroku server instead of thingiverse
                 subscription = thingiverseAuthService.getAccessToken(context.getString(R.string.client_id), context.getString(R.string.client_secret), code)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(application.defaultSubscribeScheduler())
@@ -107,6 +111,12 @@ public class MainViewModel implements ViewModel {
         progressVisibility.set(View.INVISIBLE);
     }
 
+    public void goToUrl (String url) {
+        Uri uriUrl = Uri.parse(url);
+        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+        context.startActivity(launchBrowser);
+    }
+
     @Override
     public void destroy() {
         if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
@@ -116,9 +126,37 @@ public class MainViewModel implements ViewModel {
 
     public void onClickLogin(View view) {
         thingiverseInitLogin();
+        octoprintInit();
+    }
+    public void onClickBedLevel(View view) {
+        octoprintInit();
+        promptBedLevel();
+    }
+
+    public void promptBedLevel() {
+        new AlertDialog.Builder(context)
+                .setIcon(0)
+                .setTitle("Bed level")
+                .setMessage("Would you like to start bed leveling?")
+                .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        context.startActivity(BedLevelActivity.newIntent(context));
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.no), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                    }
+                })
+                .show();
+    }
+
+    private void octoprintInit() {
         PrintdApplication application = PrintdApplication.get(context);
+        //TODO get API key from Heroku
         application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, context.getString(R.string.andrews_octoprint_api_secret)));
     }
+
     public void thingiverseInitLogin() {
         Intent intent = new Intent(
                 Intent.ACTION_VIEW,

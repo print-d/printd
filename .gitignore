@@ -1,6 +1,8 @@
 *.iml
 .gradle
+aFileChooser/build
 /local.properties
+.idea
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
@@ -8,3 +10,10 @@
 /captures
 .externalNativeBuild
 private_strings.xml
+/.idea
+/.idea/*
+/aFileChooser/build
+/aFileChooser/build/*
+gradle-wrapper.jar
+gradlew
+gradlew.bat

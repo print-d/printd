@@ -16,14 +16,23 @@
         android:orientation="vertical"
         tools:activity=".MainActivity">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+        </android.support.design.widget.AppBarLayout>
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/myFAB"
             android:layout_width="wrap_content"
@@ -34,34 +43,62 @@
             android:layout_margin="10dp"
             android:clickable="true"
             android:onClick="@{viewModel.onClickLogin}"
-            android:src="@drawable/ic_print" />
-        <RelativeLayout
-            android:id="@+id/layout_login"
-            android:layout_below="@id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
-            android:paddingBottom="20dp"
-            android:paddingLeft="@dimen/vertical_margin"
-            android:paddingRight="@dimen/vertical_margin"
-            android:paddingTop="10dp">
-
-            <Button
-                android:id="@+id/login_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/login_button"
-                android:onClick="@{viewModel.onClickLogin}"/>
-        </RelativeLayout>
+            android:src="@drawable/ic_print"
+            app:backgroundTint="@color/primary" />
 
         <ProgressBar
             android:id="@+id/progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/toolbar"
+            app:visibility="@{viewModel.progressVisibility}"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/main_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:layout_centerInParent="true"
+
+            app:srcCompat="@drawable/main_logo" />
+        <Button
+            android:id="@+id/btn_thingiverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/thingiverse"
+            android:layout_marginBottom="43dp"
+            android:layout_alignParentBottom="true"
+            android:clickable="true"
+            android:autoLink="web"
+            android:cursorVisible="true"
+            android:linksClickable="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            app:visibility="@{viewModel.progressVisibility}"/>
+            android:onClick="goToThingiverse"/>
+
+        <Button
+            android:id="@+id/btn_bedlevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bedlevel"
+            android:clickable="true"
+            android:autoLink="web"
+            android:cursorVisible="true"
+            android:linksClickable="true"
+            android:onClick="@{viewModel.onClickBedLevel}"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/btn_thingiverse"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="93dp" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
