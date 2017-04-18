@@ -15,7 +15,8 @@
             android:name=".view.MainActivity"
             android:label="print(d)"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,25 +38,29 @@
             android:label="Select a Collection"
             android:launchMode="singleTop"
             android:parentActivityName=".view.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="nosensor"/>
         <activity
             android:name=".view.ThingiverseCollectionActivity"
             android:label="print(d)"
             android:launchMode="singleTop"
             android:parentActivityName=".view.ThingiverseCollectionsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="nosensor"/>
         <activity
             android:name=".view.ThingiverseThingActivity"
             android:label="Select File to Print"
             android:launchMode="singleTop"
             android:parentActivityName=".view.ThingiverseCollectionActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="nosensor"/>
         <activity
             android:name=".view.BedLevelActivity"
             android:label="Bed Level"
             android:launchMode="singleTop"
             android:parentActivityName=".view.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="nosensor"/>
     </application>
 
 </manifest>
