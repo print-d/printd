@@ -11,6 +11,10 @@ import android.view.View;
 
 import com.printdinc.printd.PrintdApplication;
 import com.printdinc.printd.R;
+import com.printdinc.printd.model.ConnectionState;
+import com.printdinc.printd.model.JobStatus;
+import com.printdinc.printd.model.JobStatusState;
+import com.printdinc.printd.model.SimpleCommand;
 import com.printdinc.printd.service.OctoprintService;
 import com.printdinc.printd.service.OctoprintServiceGenerator;
 import com.printdinc.printd.service.ThingiverseAuthService;
@@ -23,6 +27,7 @@ import com.printdinc.printd.view.ThingiverseCollectionsActivity;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Subscriber;
 import rx.Subscription;
@@ -131,6 +136,42 @@ public class MainViewModel implements ViewModel {
     public void onClickBedLevel(View view) {
         octoprintInit();
         promptBedLevel();
+    }
+
+    public void onClickCheckPrintStatus(View view) {
+        octoprintInit();
+
+    }
+
+    private void getJobStatus() {
+        if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
+        PrintdApplication application = PrintdApplication.get(context);
+        OctoprintService octoprintService = application.getOctoprintService();
+        subscription = octoprintService.getJobInformation()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(application.defaultSubscribeScheduler())
+                .subscribe(new Subscriber<JobStatus>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.e(TAG, "completed!");
+                    }
+
+                    @Override
+                    public void onError(Throwable error) {
+                        Log.e(TAG, "Error printing", error);
+                    }
+
+                    @Override
+                    public void onNext(JobStatus js) {
+                        // Winning again?
+                        JobStatusState jss = js.getProgress();
+                        // jss.getCompletion
+                        // jss.getFilepos
+                        // jss.getPrintTime
+                        // jss.getPrintTimeLeft
+
+                    }
+                });
     }
 
     public void promptBedLevel() {

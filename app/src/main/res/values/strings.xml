@@ -10,7 +10,9 @@
     <string name="me_user">me</string>
     <string name="action_settings">Settings</string>
     <string name="thingiverse">Thingiverse</string>
+    <string name="browsethingiverse">Browse Thingiverse</string>
     <string name="bedlevel">Bed level</string>
+    <string name="checkprintstatus">Check print status</string>
     <string name="nextstep">Next step</string>
     <string name="stlname">printdDownload.stl</string>
     <string name="location">local</string>
