@@ -9,8 +9,11 @@
     <string name="print">Print</string>
     <string name="me_user">me</string>
     <string name="action_settings">Settings</string>
+    <string name="action_help">Help</string>
     <string name="thingiverse">Thingiverse</string>
+    <string name="browsethingiverse">Browse Thingiverse</string>
     <string name="bedlevel">Bed level</string>
+    <string name="checkprintstatus">Check print status</string>
     <string name="nextstep">Next step</string>
     <string name="stlname">printdDownload.stl</string>
     <string name="location">local</string>
@@ -25,8 +28,20 @@
     <string name="thingiverseURI">http://www.thingiverse.com/</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name ="bed_level_instructions">We will start in one corner and work our way around.
+    <string name="okay">Okay</string>
+    <string name="cancel">Cancel</string>
+    <string name="bed_level_instructions">We will start in one corner and work our way around.
         When the printer head stops moving, put a piece of paper underneath the nozzle. Adjust that
         corner of the bed until there is slight resistance on the paper from the nozzle. When
         finished with the corner, press this button to continue to the next.</string>
+    <string name="helpquestion1">Question 1</string>
+    <string name="helpanswer1">Test answer 1</string>
+    <string name="helpquestion2">Question 2</string>
+    <string name="helpanswer2">Test answer 2</string>
+    <string name="helpquestion3">Question 3</string>
+    <string name="helpanswer3">Test answer 3</string>
+    <string name="helpquestion4">Question 4</string>
+    <string name="helpanswer4">Test answer 4</string>
+    <string name="select_octoprint">Select your OctoPrint installation from the choices shown below.
+        If it is not visible, visit http://octoprint.org/download/</string>
 </resources>

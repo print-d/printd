@@ -1,5 +1,6 @@
 package com.printdinc.printd.service;
 
+import com.printdinc.printd.model.JobStatus;
 import com.printdinc.printd.model.PrintHeadCommand;
 import com.printdinc.printd.model.ConnectionState;
 import com.printdinc.printd.model.SimpleCommand;
@@ -37,8 +38,8 @@ public interface OctoprintService {
     @POST("api/printer/printhead")
     Observable<ResponseBody> printHeadCommand(@Body PrintHeadCommand phc);
 
-    //@POST("api/printer/printhead")
-    //Observable<ResponseBody> printJogCommand(@Body PrintHeadCommand phc);
+    @GET("api/job")
+    Observable<JobStatus> getJobInformation();
 
 
 }

@@ -6,7 +6,6 @@ import android.content.Context;
 import com.printdinc.printd.service.HerokuService;
 import com.printdinc.printd.service.HerokuServiceGenerator;
 import com.printdinc.printd.service.OctoprintService;
-import com.printdinc.printd.service.OctoprintServiceGenerator;
 import com.printdinc.printd.service.ThingiverseAuthService;
 import com.printdinc.printd.service.ThingiverseAuthServiceGenerator;
 import com.printdinc.printd.service.ThingiverseService;
@@ -52,10 +51,10 @@ public class PrintdApplication extends Application {
     }
 
     public OctoprintService getOctoprintService() {
-        if (octoprintService == null) {
-            octoprintService =
-                    OctoprintServiceGenerator.createService(OctoprintService.class);
-        }
+//        if (octoprintService == null) {
+//            octoprintService =
+//                    OctoprintServiceGenerator.createService(OctoprintService.class);
+//        }
         return octoprintService;
     }
 

@@ -73,15 +73,15 @@
             android:id="@+id/btn_thingiverse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/thingiverse"
-            android:layout_marginBottom="43dp"
-            android:layout_alignParentBottom="true"
+            android:text="@string/browsethingiverse"
+            android:layout_marginBottom="21dp"
             android:clickable="true"
             android:autoLink="web"
             android:cursorVisible="true"
             android:linksClickable="true"
-            android:layout_centerHorizontal="true"
-            android:onClick="goToThingiverse"/>
+            android:onClick="goToThingiverse"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:id="@+id/btn_bedlevel"
@@ -93,10 +93,27 @@
             android:cursorVisible="true"
             android:linksClickable="true"
             android:onClick="@{viewModel.onClickBedLevel}"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/btn_thingiverse"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="93dp" />
+            android:layout_above="@+id/btn_thingiverse"
+            android:layout_alignLeft="@+id/btn_thingiverse"
+            android:layout_alignRight="@+id/btn_thingiverse"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/btn_printstatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/checkprintstatus"
+            android:clickable="true"
+            android:autoLink="web"
+            android:cursorVisible="true"
+            android:linksClickable="true"
+            android:onClick="@{viewModel.onClickCheckPrintStatus}"
+            android:layout_above="@+id/btn_bedlevel"
+            android:layout_alignLeft="@+id/btn_bedlevel"
+            android:layout_alignRight="@+id/btn_bedlevel"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="12dp" />
 
         <Button
             android:id="@+id/btn_createaccount"
