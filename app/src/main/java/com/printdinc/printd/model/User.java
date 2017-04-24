@@ -29,7 +29,7 @@ public class User {
     public String getMake() {return make;}
     public String getModel() {return model;}
 
-    public User(String username, String password, String op_apikey, String model, String make) {
+    public User(String username, String password, String op_apikey, String make, String model) {
         this.username = username;
         this.password = password;
         this.op_apikey = op_apikey;

@@ -1,6 +1,7 @@
 package com.printdinc.printd.service;
 
 import com.printdinc.printd.model.Login;
+import com.printdinc.printd.model.Printer;
 import com.printdinc.printd.model.PrinterData;
 import com.printdinc.printd.model.ThingiverseCollection;
 import com.printdinc.printd.model.ThingiverseCollectionThing;
@@ -24,13 +25,17 @@ public interface HerokuService {
     @POST("login/")
     Observable<String> login(@Body Login login_param);
 
-    @POST("UserData/")
-    Observable<String> user(@Body User user_data);
+    @POST("create/")
+    Observable<String> createUser(@Body User user);
 
-    @GET("PrinterData/")
-    Observable<String> printerData(@Body PrinterData printer_data);
+    @GET("printerdata/")
+    Observable<PrinterData> printerData(@Body PrinterData printer_data);
 
-    @Streaming
-    @GET
-    Call<ResponseBody> downloadFile(@Url String fileUrl);
+    @GET("dimensions/")
+    Observable<Printer> printerDimensions(@Body Printer printer_param);
+
+    //@GET("configfile/")
+    //Observable<>
+
+
 }

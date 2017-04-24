@@ -15,15 +15,13 @@
     <string name="stlname">printdDownload.stl</string>
     <string name="location">local</string>
     <string name="sliceCommand">slice</string>
-<<<<<<< HEAD
     <string name="accountUsername">Username</string>
     <string name="accountPassword">Password</string>
     <string name="confirmPassword">Confirm</string>
     <string name="octoKey">OctoPrint API Key</string>
     <string name="printerMake">3D Printer Make</string>
     <string name="printerModel">3D Printer Model</string>
-    <string name="createAccount">Create</string>
-=======
+    <string name="createAccount">Create Account</string>
     <string name="thingiverseURI">http://www.thingiverse.com/</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -31,5 +29,4 @@
         When the printer head stops moving, put a piece of paper underneath the nozzle. Adjust that
         corner of the bed until there is slight resistance on the paper from the nozzle. When
         finished with the corner, press this button to continue to the next.</string>
->>>>>>> refs/remotes/origin/master
 </resources>

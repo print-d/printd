@@ -50,16 +50,18 @@
             android:launchMode="singleTop"
             android:parentActivityName=".view.ThingiverseCollectionActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-<<<<<<< HEAD
-        <activity android:name=".viewmodel.CreateAccountViewModel"></activity>
-=======
+        <activity
+            android:name=".view.CreateAccountActivity"
+            android:label="Create Account"
+            android:launchMode="singleTop"
+            android:parentActivityName=".view.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.BedLevelActivity"
             android:label="Bed Level"
             android:launchMode="singleTop"
             android:parentActivityName=".view.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
->>>>>>> refs/remotes/origin/master
     </application>
 
 </manifest>
