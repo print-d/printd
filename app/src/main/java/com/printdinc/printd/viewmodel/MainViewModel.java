@@ -25,6 +25,7 @@ import com.printdinc.printd.service.ThingiverseAuthServiceGenerator;
 import com.printdinc.printd.service.ThingiverseService;
 import com.printdinc.printd.service.ThingiverseServiceGenerator;
 import com.printdinc.printd.view.BedLevelActivity;
+import com.printdinc.printd.view.CreateAccountActivity;
 import com.printdinc.printd.view.ThingiverseCollectionsActivity;
 
 import java.util.regex.Matcher;
@@ -154,6 +155,9 @@ public class MainViewModel implements ViewModel {
         promptBedLevel();
     }
 
+    public void onClickCreateAccount(View view) {
+        context.startActivity(CreateAccountActivity.newIntent(context));
+    }
     public void onClickCheckPrintStatus(View view) {
         octoprintInit(null);
         getJobStatus();
