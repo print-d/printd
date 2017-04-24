@@ -1,12 +1,19 @@
 package com.printdinc.printd.viewmodel;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.ObservableInt;
 import android.net.Uri;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.printdinc.printd.PrintdApplication;
@@ -37,7 +44,7 @@ import rx.android.schedulers.AndroidSchedulers;
  * Created by andrewthomas on 3/9/17.
  */
 
-public class MainViewModel implements ViewModel {
+public class MainViewModel extends AppCompatActivity implements ViewModel {
 
     private static final String TAG = "MainViewModel";
 
@@ -140,9 +147,9 @@ public class MainViewModel implements ViewModel {
 
     public void onClickCheckPrintStatus(View view) {
         octoprintInit();
-
+        getJobStatus();
     }
-
+    
     private void getJobStatus() {
         if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
         PrintdApplication application = PrintdApplication.get(context);
