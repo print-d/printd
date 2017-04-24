@@ -9,7 +9,7 @@
             type="com.printdinc.printd.viewmodel.HelpViewModel"/>
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -32,11 +32,66 @@
 
         </android.support.design.widget.AppBarLayout>
 
+        <TextView
+            android:id="@+id/question1"
+            android:text="@string/helpquestion1"
+            android:clickable="true"
+            android:onClick="@{viewModel.onClickQuestion1}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/answer1"
+            android:text="@string/helpanswer1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.answer1Visibility}"/>
+
+        <TextView
+            android:id="@+id/question2"
+            android:onClick="@{viewModel.onClickQuestion2}"
+            android:text="@string/helpquestion2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/answer2"
+            android:text="@string/helpanswer2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.answer2Visibility}"/>
+
+        <TextView
+            android:id="@+id/question3"
+            android:text="@string/helpquestion3"
+            android:onClick="@{viewModel.onClickQuestion3}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/answer3"
+            android:text="@string/helpanswer3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.answer3Visibility}"/>
+
+        <TextView
+            android:id="@+id/question4"
+            android:text="@string/helpquestion4"
+            android:onClick="@{viewModel.onClickQuestion4}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/answer4"
+            android:text="@string/helpanswer4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.answer4Visibility}"/>
 
 
 
 
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </layout>

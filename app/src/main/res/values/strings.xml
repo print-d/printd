@@ -25,4 +25,13 @@
         When the printer head stops moving, put a piece of paper underneath the nozzle. Adjust that
         corner of the bed until there is slight resistance on the paper from the nozzle. When
         finished with the corner, press this button to continue to the next.</string>
+    <string name="helpquestion1">Question 1</string>
+    <string name="helpanswer1">Test answer 1</string>
+    <string name="helpquestion2">Question 2</string>
+    <string name="helpanswer2">Test answer 2</string>
+    <string name="helpquestion3">Question 3</string>
+    <string name="helpanswer3">Test answer 3</string>
+    <string name="helpquestion4">Question 4</string>
+    <string name="helpanswer4">Test answer 4</string>
+
 </resources>

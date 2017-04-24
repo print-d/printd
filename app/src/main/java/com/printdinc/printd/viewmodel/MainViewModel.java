@@ -149,7 +149,7 @@ public class MainViewModel extends AppCompatActivity implements ViewModel {
         octoprintInit();
         getJobStatus();
     }
-    
+
     private void getJobStatus() {
         if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
         PrintdApplication application = PrintdApplication.get(context);
