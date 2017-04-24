@@ -155,10 +155,9 @@ public class MainViewModel implements ViewModel {
         promptBedLevel();
     }
 
-<<<<<<< HEAD
     public void onClickCreateAccount(View view) {
         context.startActivity(CreateAccountActivity.newIntent(context));
-=======
+    }
     public void onClickCheckPrintStatus(View view) {
         octoprintInit(null);
         getJobStatus();
@@ -193,7 +192,6 @@ public class MainViewModel implements ViewModel {
 
                     }
                 });
->>>>>>> refs/remotes/origin/master
     }
 
     public void promptBedLevel() {
