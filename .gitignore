@@ -15,8 +15,6 @@ private_strings.xml
 /aFileChooser/build
 /aFileChooser/build/*
 gradle-wrapper.jar
-gradlew
-gradlew.bat
 *.aar
 compile-file-map.properties
 merger.xml
