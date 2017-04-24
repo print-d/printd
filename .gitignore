@@ -17,3 +17,12 @@ private_strings.xml
 gradle-wrapper.jar
 gradlew
 gradlew.bat
+*.aar
+compile-file-map.properties
+merger.xml
+mimetypes.xml
+modules.xml
+resources-debug-androidTest.ap_
+values-*.json
+values.json
+xml.json
