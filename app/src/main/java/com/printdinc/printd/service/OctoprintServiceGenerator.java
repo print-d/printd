@@ -21,16 +21,18 @@ public class OctoprintServiceGenerator {
     //TODO use Network Discovery Service to find OctoPrint
     private static Retrofit.Builder builder =
             new Retrofit.Builder()
-                    .baseUrl("http://192.168.0.108/")
+//                    .baseUrl("http://192.168.0.108/")
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(new Gson()));
 
     public static <S> S createService(Class<S> serviceClass) {
-        return createService(serviceClass, null);
+        return createService(serviceClass, null, null);
     }
 
     public static <S> S createService(
-            Class<S> serviceClass, final String authToken) {
+            Class<S> serviceClass, final String baseUrl, final String authToken) {
+
+        builder.baseUrl(baseUrl);
 
         Retrofit retrofit = null;
 
