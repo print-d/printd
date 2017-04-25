@@ -26,7 +26,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
+                android:background="@color/primary"
                 android:minHeight="?attr/actionBarSize"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
@@ -44,7 +44,7 @@
             android:clickable="true"
             android:onClick="@{viewModel.onClickLogin}"
             android:src="@drawable/ic_print"
-            app:backgroundTint="@color/primary" />
+            app:backgroundTint="@color/primary_dark" />
 
         <ProgressBar
             android:id="@+id/progress"
@@ -55,17 +55,19 @@
             android:layout_centerHorizontal="true" />
 
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/primary"
+        android:orientation="vertical"
+        android:gravity="center">
 
         <ImageView
             android:id="@+id/main_logo"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
+            android:adjustViewBounds="true"
             android:layout_centerInParent="true"
 
             app:srcCompat="@drawable/main_logo" />
@@ -74,7 +76,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/browsethingiverse"
-            android:layout_marginBottom="21dp"
             android:clickable="true"
             android:autoLink="web"
             android:cursorVisible="true"
@@ -93,11 +94,8 @@
             android:cursorVisible="true"
             android:linksClickable="true"
             android:onClick="@{viewModel.onClickBedLevel}"
-            android:layout_above="@+id/btn_thingiverse"
-            android:layout_alignLeft="@+id/btn_thingiverse"
-            android:layout_alignRight="@+id/btn_thingiverse"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="12dp" />
+            android:layout_alignStart="@+id/btn_thingiverse"
+            android:layout_alignEnd="@+id/btn_thingiverse" />
 
         <Button
             android:id="@+id/btn_printstatus"
@@ -109,13 +107,22 @@
             android:cursorVisible="true"
             android:linksClickable="true"
             android:onClick="@{viewModel.onClickCheckPrintStatus}"
-            android:layout_above="@+id/btn_bedlevel"
-            android:layout_alignLeft="@+id/btn_bedlevel"
-            android:layout_alignRight="@+id/btn_bedlevel"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="12dp" />
+            android:layout_alignStart="@+id/btn_bedlevel" />
 
-        </RelativeLayout>
+        <Button
+            android:id="@+id/btn_createaccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/createAccount"
+            android:clickable="true"
+            android:autoLink="web"
+            android:cursorVisible="true"
+            android:linksClickable="true"
+            android:onClick="@{viewModel.onClickCreateAccount}"
+            android:layout_alignStart="@+id/btn_bedlevel"
+            android:layout_alignEnd="@+id/btn_printstatus" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

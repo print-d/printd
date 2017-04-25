@@ -3,6 +3,8 @@ package com.printdinc.printd;
 import android.app.Application;
 import android.content.Context;
 
+import com.printdinc.printd.service.HerokuService;
+import com.printdinc.printd.service.HerokuServiceGenerator;
 import com.printdinc.printd.service.OctoprintService;
 import com.printdinc.printd.service.ThingiverseAuthService;
 import com.printdinc.printd.service.ThingiverseAuthServiceGenerator;
@@ -16,11 +18,20 @@ public class PrintdApplication extends Application {
 
     private ThingiverseService thingiverseService;
     private ThingiverseAuthService thingiverseAuthService;
+    private HerokuService herokuService;
     private OctoprintService octoprintService;
     private Scheduler defaultSubscribeScheduler;
 
     public static PrintdApplication get(Context context) {
         return (PrintdApplication) context.getApplicationContext();
+    }
+
+    public HerokuService getHerokuService() {
+        if (herokuService == null) {
+            herokuService =
+                    HerokuServiceGenerator.createService(HerokuService.class);
+        }
+        return herokuService;
     }
 
     public ThingiverseService getThingiverseService() {
@@ -50,6 +61,9 @@ public class PrintdApplication extends Application {
     //For setting mocks during testing & after getting auth token
     public void setThingiverseService(ThingiverseService thingiverseService) {
         this.thingiverseService = thingiverseService;
+    }
+    public void setHerokuService(HerokuService herokuService) {
+        this.herokuService = herokuService;
     }
     public void setThingiverseAuthService(ThingiverseAuthService thingiverseAuthService) {
         this.thingiverseAuthService = thingiverseAuthService;
