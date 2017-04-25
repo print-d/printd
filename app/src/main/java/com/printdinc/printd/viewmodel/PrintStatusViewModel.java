@@ -43,20 +43,20 @@ public class PrintStatusViewModel implements ViewModel {
 
     private Subscription subscription;
 
-    public String completion;
-    public String filepos;
-    public String printTime;
-    public String printTimeLeft;
+    public ObservableField<String> completion;
+    public ObservableField<String> filepos;
+    public ObservableField<String> printTime;
+    public ObservableField<String> printTimeLeft;
 
 
     public PrintStatusViewModel(Context context, Activity activity) {
 
         this.context = context;
         this.activity = activity;
-        completion = "Loading...";
-        filepos = "Loading...";
-        printTime = "Loading...";
-        printTimeLeft = "Loading...";
+        completion = new ObservableField<String>("Loading...");
+        filepos = new ObservableField<String>("Loading...");
+        printTime = new ObservableField<String>("Loading...");
+        printTimeLeft = new ObservableField<String>("Loading...");
         getJobStatus();
     }
 
@@ -99,10 +99,10 @@ public class PrintStatusViewModel implements ViewModel {
                     public void onNext(JobStatus js) {
                         // Winning again?
                         JobStatusState jss = js.getProgress();
-                        completion = String.valueOf(jss.getCompletion());
-                        filepos = String.valueOf(jss.getFilepos());
-                        printTime = String.valueOf(jss.getPrintTime());
-                        printTimeLeft = String.valueOf(jss.getPrintTimeLeft());
+                        completion.set(String.valueOf(jss.getCompletion()));
+                        filepos.set(String.valueOf(jss.getFilepos()));
+                        printTime.set(String.valueOf(jss.getPrintTime()));
+                        printTimeLeft.set(String.valueOf(jss.getPrintTimeLeft()));
                     }
                 });
     }
