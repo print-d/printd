@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.net.Uri;
 import android.os.Handler;
@@ -23,6 +24,7 @@ import com.printdinc.printd.model.SliceCommand;
 import com.printdinc.printd.model.ThingiverseThingFile;
 import com.printdinc.printd.service.OctoprintService;
 import com.printdinc.printd.service.ThingiverseService;
+import com.printdinc.printd.view.MainActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -281,7 +283,10 @@ public class ItemFileViewModel extends BaseObservable implements ViewModel {
                                     .setMessage("The file was successfully uploaded!\nIt will begin printing once it is sliced.")
                                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
-
+                                            Intent newIntent = new Intent(context,MainActivity.class);
+                                            newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            context.startActivity(newIntent);
                                         }
                                     })
                                     .show();

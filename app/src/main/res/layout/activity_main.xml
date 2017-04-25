@@ -132,7 +132,7 @@
                 android:autoLink="web"
                 android:cursorVisible="true"
                 android:linksClickable="true"
-                android:onClick="goToThingiverse"
+                android:onClick="@{viewModel.goToThingiverse}"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:backgroundTint="@color/white"

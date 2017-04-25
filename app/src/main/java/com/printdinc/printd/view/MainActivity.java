@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.printdinc.printd.R;
 import com.printdinc.printd.databinding.ActivityMainBinding;
@@ -41,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         int x = item.getItemId();
 
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
+//            case R.id.action_settings:
+//                // User chose the "Settings" item, show the app settings UI...
+//                return true;
 
             case R.id.action_help:
                 this.startActivity(HelpActivity.newIntent(this));
@@ -74,10 +73,6 @@ public class MainActivity extends AppCompatActivity {
         String scheme = intent.getScheme();
 
         mainViewModel.thingiverseLogin(uri);
-    }
-
-    public void goToThingiverse (View view) {
-        mainViewModel.goToUrl ( getString(R.string.thingiverseURI));
     }
 
     @Override

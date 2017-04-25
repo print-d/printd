@@ -15,8 +15,6 @@ import android.widget.ArrayAdapter;
 
 import com.printdinc.printd.PrintdApplication;
 import com.printdinc.printd.R;
-import com.printdinc.printd.model.JobStatus;
-import com.printdinc.printd.model.JobStatusState;
 import com.printdinc.printd.model.NewNSDInfo;
 import com.printdinc.printd.service.OctoprintService;
 import com.printdinc.printd.service.OctoprintServiceGenerator;
@@ -25,8 +23,8 @@ import com.printdinc.printd.service.ThingiverseAuthServiceGenerator;
 import com.printdinc.printd.service.ThingiverseService;
 import com.printdinc.printd.service.ThingiverseServiceGenerator;
 import com.printdinc.printd.view.BedLevelActivity;
-import com.printdinc.printd.view.PrintStatusActivity;
 import com.printdinc.printd.view.CreateAccountActivity;
+import com.printdinc.printd.view.PrintStatusActivity;
 import com.printdinc.printd.view.ThingiverseCollectionsActivity;
 
 import java.util.regex.Matcher;
@@ -360,6 +358,10 @@ public class MainViewModel implements ViewModel {
             services.add(item[0]);
         }
 
+    }
+
+    public void goToThingiverse (View view) {
+        goToUrl ( context.getString(R.string.thingiverseURI));
     }
 }
 
