@@ -80,15 +80,15 @@
             android:paddingTop="30dp">
 
             <Button
-                android:id="@+id/btn_createaccount"
+                android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/loginButton"
+                android:text="@string/title_activity_login"
                 android:clickable="true"
                 android:autoLink="web"
                 android:cursorVisible="true"
                 android:linksClickable="true"
-                android:onClick="@{viewModel.onClickCreateAccount}"
+                android:onClick="@{viewModel.onClickLoginAccount}"
                 android:layout_alignStart="@+id/btn_bedlevel"
                 android:layout_alignEnd="@+id/btn_printstatus"
                 android:backgroundTint="@color/white"

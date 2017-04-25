@@ -81,6 +81,13 @@
             android:parentActivityName=".view.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".view.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:launchMode="singleTop"
+            android:parentActivityName=".view.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

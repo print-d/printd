@@ -3,31 +3,31 @@ package com.printdinc.printd.view;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
+
+import android.os.Bundle;
+
 
 import com.printdinc.printd.R;
-import com.printdinc.printd.databinding.ActivityCreateAccountBinding;
-import com.printdinc.printd.viewmodel.CreateAccountViewModel;
+import com.printdinc.printd.databinding.ActivityLoginBinding;
+import com.printdinc.printd.viewmodel.LoginViewModel;
+
 
 /**
- * Created by pdixon on 4/16/2017.
+ * A login screen that offers login via username/password.
  */
+public class LoginActivity extends AppCompatActivity {
 
-public class CreateAccountActivity extends AppCompatActivity {
-
-
-    private ActivityCreateAccountBinding binding;
-    private CreateAccountViewModel createAccountViewModel;
+    private ActivityLoginBinding binding;
+    private LoginViewModel loginViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_create_account);
-        createAccountViewModel = new CreateAccountViewModel(this, this);
-        binding.setViewModel(createAccountViewModel);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        loginViewModel = new LoginViewModel(this, this);
+        binding.setViewModel(loginViewModel);
         setSupportActionBar(binding.toolbar);
 
         ActionBar actionBar = getSupportActionBar();
@@ -39,11 +39,12 @@ public class CreateAccountActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        createAccountViewModel.destroy();
+        loginViewModel.destroy();
     }
 
     public static Intent newIntent(Context context) {
-        Intent intent = new Intent(context, CreateAccountActivity.class);
+        Intent intent = new Intent(context, LoginActivity.class);
         return intent;
     }
 }
+
