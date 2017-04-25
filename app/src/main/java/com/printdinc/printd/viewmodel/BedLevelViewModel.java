@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import okhttp3.ResponseBody;
+import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -45,7 +46,7 @@ public class BedLevelViewModel implements ViewModel {
 
     public ObservableField<String> buttonText;
 
-    public String instructionsText;
+    public ObservableField<String> instructionsText;
 
     public ObservableInt progressVisibility;
 
@@ -54,9 +55,9 @@ public class BedLevelViewModel implements ViewModel {
         this.context = context;
         this.activity = activity;
         progressVisibility = new ObservableInt(View.INVISIBLE);
-        makeSurePrinterIsConnectedForBedLevel();
-        buttonText = new ObservableField<String>(context.getString(R.string.nextstep));
-        instructionsText = context.getString(R.string.bed_level_instructions);
+        //makeSurePrinterIsConnectedForBedLevel();
+        buttonText = new ObservableField<String>(context.getString(R.string.start));
+        instructionsText = new ObservableField<String>(context.getString(R.string.bed_level_start_instructions));
         printer_dimensions = get_printer_dimensions_from_server();
         current_step = 1;
     }
@@ -104,9 +105,7 @@ public class BedLevelViewModel implements ViewModel {
 
     private void firstStep() {
         PrintHeadCommand home_command = new PrintHeadCommand("home", new ArrayList<String>(Arrays.asList("x", "y", "z")), 0, 0, 0, false);
-        //PrintHeadCommand jog_command = new PrintHeadCommand("jog", new ArrayList<String>(Arrays.asList("x", "y", "z")), 30, 15, 0);
-        doPrintHeadCommand(home_command);
-
+        //doPrintHeadCommand(home_command);
     }
 
     private PrintHeadCommand jogCommand(int x, int y, int z) {
@@ -115,7 +114,7 @@ public class BedLevelViewModel implements ViewModel {
     }
 
     public void onClickNext(View view) {
-        if (current_step >= 4) {
+        if (current_step >= 5) {
             // Finish
             new AlertDialog.Builder(context)
                     .setIcon(0)
@@ -134,6 +133,24 @@ public class BedLevelViewModel implements ViewModel {
                         }
                     })
                     .show();
+        } else if (current_step == 1) {
+            new AlertDialog.Builder(context)
+                    .setIcon(0)
+                    .setTitle("Begin")
+                    .setMessage("Are you ready to get started?")
+                    .setNegativeButton(context.getString(R.string.no), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Do nothing
+                        }
+                    })
+                    .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            current_step++;
+                            instructionsText.set(context.getString(R.string.bed_level_instructions));
+                            buttonText.set(context.getString(R.string.nextstep));
+                        }
+                    })
+                    .show();
         } else {
             new AlertDialog.Builder(context)
                     .setIcon(0)
@@ -147,15 +164,15 @@ public class BedLevelViewModel implements ViewModel {
                     .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // Go to the next corner
-                            moveToNextCorner();
+                            //moveToNextCorner();
                             current_step++;
+                            if (current_step == 5) {
+                                buttonText.set(context.getString(R.string.complete));
+                            }
 
                         }
                     })
                     .show();
-        }
-        if (current_step == 3) {
-            buttonText.set("Complete");
         }
     }
 
@@ -185,27 +202,6 @@ public class BedLevelViewModel implements ViewModel {
         PrintHeadCommand jog_command = new PrintHeadCommand("jog", new ArrayList<String>(Arrays.asList("x", "y", "z")), x, y, 0, true);
         doPrintHeadCommand(jog_command);
     }
-
-
-    private void secondStep() {
-
-
-    }
-
-    private void thirdStep() {
-
-    }
-
-    private void fourthStep() {
-
-    }
-
-
-
-
-
-
-
 
     private void errorPrinting() {
         progressVisibility.set(View.INVISIBLE);
@@ -255,7 +251,6 @@ public class BedLevelViewModel implements ViewModel {
                         if (realCS.getState().equals("Connecting"))
                         {
                             try {
-                                Thread.sleep(5000l);
                                 makeSurePrinterIsConnectedForBedLevel(depth + 1);
                             }
                             catch(Exception e) {
@@ -278,7 +273,6 @@ public class BedLevelViewModel implements ViewModel {
                             //uploadFile(fileUri);
                             // Do something now that you are connected.
                             progressVisibility.set(View.INVISIBLE);
-                            firstStep();
                         }
 
                     }
@@ -307,7 +301,6 @@ public class BedLevelViewModel implements ViewModel {
                     @Override
                     public void onNext(ResponseBody cs) {
                         try {
-                            Thread.sleep(5000l);
                             makeSurePrinterIsConnectedForBedLevel(depth + 1);
                         }
                         catch (Exception e) {

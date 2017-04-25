@@ -157,7 +157,7 @@ public class MainViewModel implements ViewModel {
         thingiverseInitLogin();
     }
     public void onClickBedLevel(View view) {
-        promptBedLevel();
+        octoprintInit(BedLevelActivity.newIntent(context));
     }
 
 

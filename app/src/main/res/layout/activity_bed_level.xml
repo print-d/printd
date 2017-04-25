@@ -60,9 +60,11 @@
             <ImageView
                 android:id="@+id/bed_level_printer_head_photo"
                 android:layout_below="@+id/instructiontext"
+                android:padding="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/bed_level_printer_head"/>
+                android:adjustViewBounds="true"
+                android:src="@drawable/printerhead_bedleveling"/>
 
             <Button
                 android:id="@+id/btn_next"

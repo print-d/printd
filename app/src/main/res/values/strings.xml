@@ -31,10 +31,11 @@
     <string name="no">No</string>
     <string name="okay">Okay</string>
     <string name="cancel">Cancel</string>
-    <string name="bed_level_instructions">We will start in one corner and work our way around.
-        When the printer head stops moving, put a piece of paper underneath the nozzle. Adjust that
-        corner of the bed until there is slight resistance on the paper from the nozzle. When
-        finished with the corner, press this button to continue to the next.</string>
+    <string name="bed_level_start_instructions">What you will need:\n\n\n1. A sheet of paper\n\n2. Whatever is
+        needed to adjust the screws on the bed of your printer</string>
+    <string name="bed_level_instructions">When the printer head stops you may begin.\n\n
+        Put a piece of paper underneath the nozzle. Adjust that corner of the bed until there is
+        slight resistance on the paper from the nozzle.</string>
     <string name="helpquestion1">Question 1</string>
     <string name="helpanswer1">Test answer 1</string>
     <string name="helpquestion2">Question 2</string>
@@ -48,6 +49,8 @@
     <string name="printstatus_print_time">Print time</string>
     <string name="printstatus_print_time_left">Print time left</string>
     <string name="refresh">Refresh</string>
+    <string name="start">Start</string>
+    <string name="complete">Complete</string>
     <string name="select_octoprint">Select your OctoPrint installation from the choices shown below.
         If it is not visible, visit http://octoprint.org/download/</string>
     <string name="login">Login</string>

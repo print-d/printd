@@ -44,7 +44,6 @@ public class PrintStatusViewModel implements ViewModel {
     private Subscription subscription;
 
     public ObservableField<String> completion;
-    public ObservableField<String> filepos;
     public ObservableField<String> printTime;
     public ObservableField<String> printTimeLeft;
 
@@ -54,7 +53,6 @@ public class PrintStatusViewModel implements ViewModel {
         this.context = context;
         this.activity = activity;
         completion = new ObservableField<String>("Loading...");
-        filepos = new ObservableField<String>("Loading...");
         printTime = new ObservableField<String>("Loading...");
         printTimeLeft = new ObservableField<String>("Loading...");
         getJobStatus();
@@ -65,7 +63,7 @@ public class PrintStatusViewModel implements ViewModel {
         context = null;
     }
 
-    private void getJobStatus() {
+    public void getJobStatus() {
         if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
         PrintdApplication application = PrintdApplication.get(context);
         OctoprintService octoprintService = application.getOctoprintService();
@@ -101,10 +99,9 @@ public class PrintStatusViewModel implements ViewModel {
                         JobStatusState jss = js.getProgress();
 
                         // This comes in as a double. Casting it to int to make it round.
-                        completion.set(String.valueOf((int)jss.getCompletion()));
-                        filepos.set(String.valueOf(jss.getFilepos()));
-                        printTime.set(String.valueOf(jss.getPrintTime()));
-                        printTimeLeft.set(String.valueOf(jss.getPrintTimeLeft()));
+                        completion.set(String.valueOf((int)jss.getCompletion()) + "%");
+                        printTime.set(String.valueOf(jss.getPrintTime() / 60) + " min.");
+                        printTimeLeft.set(String.valueOf(jss.getPrintTimeLeft() / 60) + " min.");
                     }
                 });
     }

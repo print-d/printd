@@ -64,6 +64,7 @@ public class PrintStatusActivity extends AppCompatActivity {
             case R.id.action_refresh:
                 // Somehow make it reload here.
                 // User chose the "Settings" item, show the app settings UI...
+                printStatusViewModel.getJobStatus();
                 return true;
 
             default:
