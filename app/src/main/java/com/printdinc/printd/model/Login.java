@@ -8,10 +8,10 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class Login {
-    @SerializedName("Username")
+    @SerializedName("username")
     @Expose
     private String username;
-    @SerializedName("Password")
+    @SerializedName("password")
     @Expose
     private String password;
 

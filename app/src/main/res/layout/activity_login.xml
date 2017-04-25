@@ -1,0 +1,106 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.printdinc.printd.viewmodel.LoginViewModel"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/very_light_grey"
+        tools:context=".MainActivity">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/accountUsername"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/primary_text"
+            android:textSize="24sp"
+            android:layout_marginTop="36dp"
+            android:layout_below="@+id/toolbar"
+            android:layout_alignStart="@+id/textView2" />
+
+        <EditText
+            android:id="@+id/usernameInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="@color/secondary_text"
+            android:text="@={viewModel.usernameText}"
+            android:layout_marginEnd="22dp"
+            android:layout_alignBaseline="@+id/textView"
+            android:layout_alignBottom="@+id/textView"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/accountPassword"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/primary_text"
+            android:textSize="24sp"
+            android:layout_marginTop="102dp"
+            android:layout_below="@+id/textView"
+            android:layout_toStartOf="@+id/usernameInput"
+            android:layout_marginEnd="17dp" />
+
+        <EditText
+            android:id="@+id/passwordInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:text="@={viewModel.passwordText}"
+            android:layout_alignBaseline="@+id/textView2"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_alignStart="@+id/usernameInput" />
+
+        <Button
+            android:id="@+id/btn_complete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:onClick="@{viewModel.onClickLogin}"
+            android:layout_marginTop="61dp"
+            android:layout_below="@+id/textView2"
+            android:layout_toEndOf="@+id/textView" />
+
+        <Button
+            android:id="@+id/btn_createaccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/createAccount"
+            android:clickable="true"
+            android:autoLink="web"
+            android:cursorVisible="true"
+            android:linksClickable="true"
+            android:onClick="@{viewModel.onClickCreateAccount}"
+            android:layout_below="@+id/btn_complete"
+            android:layout_alignStart="@+id/textView2"
+            android:layout_marginStart="79dp"
+            android:layout_marginTop="48dp" />
+
+
+
+    </RelativeLayout>
+
+</layout>

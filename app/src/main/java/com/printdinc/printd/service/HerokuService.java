@@ -29,7 +29,7 @@ public interface HerokuService {
     Observable<String> createUser(@Body User user);
 
     @GET("printerdata/")
-    Observable<PrinterData> printerData(@Body PrinterData printer_data);
+    Observable<PrinterData> printerData();
 
     @GET("dimensions/")
     Observable<Printer> printerDimensions(@Body Printer printer_param);

@@ -138,6 +138,8 @@
             android:id="@+id/makeSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:entries="@{viewModel.makeEntries}"
+            android:selectedItemPosition="@={viewModel.selectedMakePosition}"
             android:layout_marginTop="36dp"
             android:layout_below="@+id/textView"
             android:layout_alignStart="@+id/apiKeyInput"
@@ -159,6 +161,8 @@
             android:id="@+id/modelSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:entries="@{viewModel.modelEntries}"
+            android:selectedItemPosition="@={viewModel.selectedModelPosition}"
             android:layout_above="@+id/btn_complete"
             android:layout_alignEnd="@+id/btn_complete"
             android:layout_alignStart="@+id/makeSpinner" />
