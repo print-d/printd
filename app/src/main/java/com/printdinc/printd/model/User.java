@@ -7,19 +7,19 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
-    @SerializedName("Username")
+    @SerializedName("username")
     @Expose
     private String username;
-    @SerializedName("Password")
+    @SerializedName("password")
     @Expose
     private String password;
-    @SerializedName("OP_APIKey")
+    @SerializedName("op_apikey")
     @Expose
     private String op_apikey;
-    @SerializedName("Make")
+    @SerializedName("make")
     @Expose
     private String make;
-    @SerializedName("Model")
+    @SerializedName("model")
     @Expose
     private String model;
 

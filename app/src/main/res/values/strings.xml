@@ -25,6 +25,7 @@
     <string name="printerMake">3D Printer Make</string>
     <string name="printerModel">3D Printer Model</string>
     <string name="createAccount">Create Account</string>
+    <string name="loginButton">Login</string>
     <string name="thingiverseURI">http://www.thingiverse.com/</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -49,4 +50,7 @@
     <string name="refresh">Refresh</string>
     <string name="select_octoprint">Select your OctoPrint installation from the choices shown below.
         If it is not visible, visit http://octoprint.org/download/</string>
+    <string name="login">Login</string>
+    <string name="title_activity_login">Sign in</string>
+
 </resources>

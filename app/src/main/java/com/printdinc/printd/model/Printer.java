@@ -8,13 +8,13 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class Printer {
-    @SerializedName("ID")
+    @SerializedName("id")
     @Expose
     private String iD;
-    @SerializedName("Make")
+    @SerializedName("make")
     @Expose
     private String make;
-    @SerializedName("Model")
+    @SerializedName("model")
     @Expose
     private String model;
     @SerializedName("x_size")
@@ -69,9 +69,5 @@ public class Printer {
 
     public String getZSize() {
         return zSize;
-    }
-
-    public void setZSize(String zSize) {
-        this.zSize = zSize;
     }
 }
