@@ -25,6 +25,7 @@
     <string name="printerMake">3D Printer Make</string>
     <string name="printerModel">3D Printer Model</string>
     <string name="createAccount">Create Account</string>
+    <string name="loginButton">Login</string>
     <string name="thingiverseURI">http://www.thingiverse.com/</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
