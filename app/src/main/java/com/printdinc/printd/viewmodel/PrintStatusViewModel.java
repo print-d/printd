@@ -99,7 +99,9 @@ public class PrintStatusViewModel implements ViewModel {
                     public void onNext(JobStatus js) {
                         // Winning again?
                         JobStatusState jss = js.getProgress();
-                        completion.set(String.valueOf(jss.getCompletion()));
+
+                        // This comes in as a double. Casting it to int to make it round.
+                        completion.set(String.valueOf((int)jss.getCompletion()));
                         filepos.set(String.valueOf(jss.getFilepos()));
                         printTime.set(String.valueOf(jss.getPrintTime()));
                         printTimeLeft.set(String.valueOf(jss.getPrintTimeLeft()));
