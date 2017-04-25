@@ -3,6 +3,7 @@ package com.printdinc.printd.viewmodel;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
@@ -17,6 +18,7 @@ import com.printdinc.printd.model.PrinterData;
 import com.printdinc.printd.model.User;
 import com.printdinc.printd.service.HerokuService;
 import com.printdinc.printd.service.HerokuServiceGenerator;
+import com.printdinc.printd.view.MainActivity;
 
 import java.util.List;
 
@@ -121,6 +123,8 @@ public class CreateAccountViewModel implements ViewModel{
 
                             PrintdApplication application = PrintdApplication.get(context);
                             application.setHerokuService(HerokuServiceGenerator.createService(HerokuService.class, r));
+                            Intent intent = new Intent(context, MainActivity.class);
+                            context.startActivity(intent);
                             activity.finish();
                         }
                     });

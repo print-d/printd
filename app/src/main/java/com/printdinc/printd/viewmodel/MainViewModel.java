@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.printdinc.printd.PrintdApplication;
 import com.printdinc.printd.R;
 import com.printdinc.printd.model.NewNSDInfo;
+import com.printdinc.printd.model.User;
+import com.printdinc.printd.service.HerokuService;
 import com.printdinc.printd.service.OctoprintService;
 import com.printdinc.printd.service.OctoprintServiceGenerator;
 import com.printdinc.printd.service.ThingiverseAuthService;
@@ -70,11 +72,14 @@ public class MainViewModel implements ViewModel {
 
         mNsdManager = (NsdManager) context.getSystemService(Context.NSD_SERVICE);
 
+        discoveringServices = false;
+
         initializeNsd();
         if (!(discoveringServices)) {
             discoverServices();
             discoveringServices = true;
         }
+
     }
 
     public void thingiverseLogin(Uri uri) {
@@ -191,7 +196,9 @@ public class MainViewModel implements ViewModel {
         //TODO get API key from Heroku
         if (application.getOctoprintService() == null)
         {
-//            services.clear();
+            HerokuService herokuService = application.getHerokuService();
+
+
 
             if (!(discoveringServices)) {
                 services.clear();
@@ -200,23 +207,52 @@ public class MainViewModel implements ViewModel {
             }
 
             int countOctopis = 0;
-            int lastOctopiIndex = -1;
+            int octopiIndex = -1;
 
             for (int i = 0; i < services.getCount(); i++) {
                 if (services.getItem(i).toString().contains("OctoPrint")) {
                     countOctopis++;
-                    lastOctopiIndex = i;
+                    octopiIndex = i;
                 }
             }
 
+            final int lastOctopiIndex = octopiIndex;
+
             if (countOctopis == 1) {
-                stopDiscovery();
-                NewNSDInfo s = services.getItem(lastOctopiIndex);
-                String url = "http://" + s.getBaseUrl() + "/";
-                application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, url, context.getString(R.string.andrews_octoprint_api_secret)));
-                if (intentToCall != null) {
-                    context.startActivity(intentToCall);
-                }
+                Log.i(TAG, "Starting getting user data");
+                herokuService.getUserData()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(application.defaultSubscribeScheduler())
+                        .subscribe(new Subscriber<User>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable error) {
+                                Log.e(TAG, "Error receiving user data ", error);
+                                progressVisibility.set(View.INVISIBLE);
+                            }
+
+                            @Override
+                            public void onNext(User data) {
+                                Log.i(TAG, "User Data received " + data.getOP_APIKey());
+                                if (data != null)
+                                {
+                                    stopDiscovery();
+                                    NewNSDInfo s = services.getItem(lastOctopiIndex);
+                                    String url = "http://" + s.getBaseUrl() + "/";
+                                    PrintdApplication application = PrintdApplication.get(context);
+                                    application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, url, data.getOP_APIKey()));
+                                    if (intentToCall != null) {
+                                        context.startActivity(intentToCall);
+                                    }
+
+                                }
+                            }
+                        });
+
                 return;
             }
             else {
@@ -237,21 +273,48 @@ public class MainViewModel implements ViewModel {
                         // User clicked OK button
 
                         if (mSelectedItem != -1) {
-                            stopDiscovery();
-                            NewNSDInfo s = services.getItem(mSelectedItem);
-                            String url = "http://" + s.getBaseUrl() + "/";
+                            final int lastSelectedItem = mSelectedItem;
                             PrintdApplication application = PrintdApplication.get(context);
-                            application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, url, context.getString(R.string.andrews_octoprint_api_secret)));
-                            if (intentToCall != null) {
-                                context.startActivity(intentToCall);
-                            }
+                            HerokuService herokuService = application.getHerokuService();
+                            herokuService.getUserData()
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribeOn(application.defaultSubscribeScheduler())
+                                    .subscribe(new Subscriber<User>() {
+                                        @Override
+                                        public void onCompleted() {
+
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable error) {
+                                            Log.e(TAG, "Error receiving token ", error);
+                                            progressVisibility.set(View.INVISIBLE);
+                                        }
+
+                                        @Override
+                                        public void onNext(User data) {
+                                            Log.i(TAG, "Token received " + data.getOP_APIKey());
+                                            if (data != null)
+                                            {
+                                                stopDiscovery();
+                                                NewNSDInfo s = services.getItem(lastOctopiIndex);
+                                                String url = "http://" + s.getBaseUrl() + "/";
+                                                PrintdApplication application = PrintdApplication.get(context);
+                                                application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, url, data.getOP_APIKey()));
+                                                if (intentToCall != null) {
+                                                    context.startActivity(intentToCall);
+                                                }
+
+                                            }
+                                        }
+                                    });
                         }
 
                         // TODO remove this for "release" distribution
                         else {
                             String url = "http://localhost/";
                             PrintdApplication application = PrintdApplication.get(context);
-                            application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, url, context.getString(R.string.andrews_octoprint_api_secret)));
+                            application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, url, ""));
                             Toast.makeText(context, "This is for demonstration purposes only!!", Toast.LENGTH_LONG).show();
 
                             if (intentToCall != null) {
@@ -401,10 +464,12 @@ public class MainViewModel implements ViewModel {
 
         //@SuppressWarnings("unchecked")
         protected void onProgressUpdate(NewNSDInfo... item) {
+            Log.i(TAG, "onProgressUpdate: " + item[0].toString());
             for (int i = 0; i < services.getCount(); i++) {
-                if (services.getItem(i).toString() == null &&
-                        services.getItem(i).toString().equals(item.toString()) )
+                if (services.getItem(i).toString() != null &&
+                        services.getItem(i).toString().equals(item[0].toString()) )
                 {
+                    Toast.makeText(context, item[0].toString(), Toast.LENGTH_LONG).show();
                     return;
                 }
             }
