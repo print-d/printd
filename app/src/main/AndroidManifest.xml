@@ -83,7 +83,7 @@
             android:screenOrientation="nosensor"/>
         <activity
             android:name=".view.LoginActivity"
-            android:label="@string/title_activity_login"
+            android:label="print(d)"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
