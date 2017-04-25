@@ -17,11 +17,11 @@
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="nosensor">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -58,7 +58,7 @@
             android:name=".view.CreateAccountActivity"
             android:label="Create Account"
             android:launchMode="singleTop"
-            android:parentActivityName=".view.MainActivity"
+            android:parentActivityName=".view.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.BedLevelActivity"
@@ -85,8 +85,13 @@
             android:name=".view.LoginActivity"
             android:label="@string/title_activity_login"
             android:launchMode="singleTop"
-            android:parentActivityName=".view.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
     </application>
 

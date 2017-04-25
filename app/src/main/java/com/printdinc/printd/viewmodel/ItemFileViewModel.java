@@ -84,6 +84,8 @@ public class ItemFileViewModel extends BaseObservable implements ViewModel {
                         progressDialog.setProgressStyle(progressDialog.STYLE_HORIZONTAL);
                         progressDialog.setProgress(0);
                         progressDialog.setMax(5);
+                        progressDialog.setCancelable(false);
+                        progressDialog.setCanceledOnTouchOutside(false);
                         progressDialog.show();
 
                         downloadFile(thingFile.download_url);
@@ -145,7 +147,7 @@ public class ItemFileViewModel extends BaseObservable implements ViewModel {
                         if (realCS.getState().equals("Connecting"))
                         {
                             try {
-                                Thread.sleep(5000l);
+//                                Thread.sleep(5000l);
                                 makeSurePrinterIsConnectedForUpload(fileUri, depth + 1);
                             }
                             catch(Exception e) {
@@ -196,7 +198,7 @@ public class ItemFileViewModel extends BaseObservable implements ViewModel {
                     @Override
                     public void onNext(ResponseBody cs) {
                         try {
-                            Thread.sleep(5000l);
+//                            Thread.sleep(5000l);
                             makeSurePrinterIsConnectedForUpload(fileUri, depth + 1);
                         }
                         catch (Exception e) {
@@ -281,6 +283,7 @@ public class ItemFileViewModel extends BaseObservable implements ViewModel {
                                     .setIcon(0)
                                     .setTitle("Print file")
                                     .setMessage("The file was successfully uploaded!\nIt will begin printing once it is sliced.")
+                                    .setCancelable(false)
                                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
                                             Intent newIntent = new Intent(context,MainActivity.class);

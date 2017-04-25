@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.printdinc.printd.PrintdApplication;
 import com.printdinc.printd.R;
@@ -23,7 +24,6 @@ import com.printdinc.printd.service.ThingiverseAuthServiceGenerator;
 import com.printdinc.printd.service.ThingiverseService;
 import com.printdinc.printd.service.ThingiverseServiceGenerator;
 import com.printdinc.printd.view.BedLevelActivity;
-import com.printdinc.printd.view.CreateAccountActivity;
 import com.printdinc.printd.view.LoginActivity;
 import com.printdinc.printd.view.PrintStatusActivity;
 import com.printdinc.printd.view.ThingiverseCollectionsActivity;
@@ -45,6 +45,8 @@ public class MainViewModel implements ViewModel {
 
     private Context context;
     private Subscription subscription;
+
+    private boolean discoveringServices;
 
     public ObservableInt progressVisibility;
 
@@ -69,7 +71,10 @@ public class MainViewModel implements ViewModel {
         mNsdManager = (NsdManager) context.getSystemService(Context.NSD_SERVICE);
 
         initializeNsd();
-        discoverServices();
+        if (!(discoveringServices)) {
+            discoverServices();
+            discoveringServices = true;
+        }
     }
 
     public void thingiverseLogin(Uri uri) {
@@ -188,44 +193,85 @@ public class MainViewModel implements ViewModel {
         {
 //            services.clear();
 
+            if (!(discoveringServices)) {
+                services.clear();
+                discoverServices();
+                discoveringServices = true;
+            }
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("Select OctoPrint instance");
+            int countOctopis = 0;
+            int lastOctopiIndex = -1;
+
+            for (int i = 0; i < services.getCount(); i++) {
+                if (services.getItem(i).toString().contains("OctoPrint")) {
+                    countOctopis++;
+                    lastOctopiIndex = i;
+                }
+            }
+
+            if (countOctopis == 1) {
+                stopDiscovery();
+                NewNSDInfo s = services.getItem(lastOctopiIndex);
+                String url = "http://" + s.getBaseUrl() + "/";
+                application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, url, context.getString(R.string.andrews_octoprint_api_secret)));
+                if (intentToCall != null) {
+                    context.startActivity(intentToCall);
+                }
+                return;
+            }
+            else {
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Select OctoPrint instance");
 //            builder.setMessage("Select an OctoPrint instance from the choices below. If yours does not appear, go to http://octoprint.org/download/");
-            builder.setSingleChoiceItems(services, -1,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                builder.setSingleChoiceItems(services, -1,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
                                 mSelectedItem = which;
-                        }
-                    });
-            builder.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // User clicked OK button
+                            }
+                        });
+                builder.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
 
-                    if (mSelectedItem != -1) {
-                        stopDiscovery();
-                        NewNSDInfo s = services.getItem(mSelectedItem);
-                        String url = "http://" + s.getBaseUrl() + "/";
-                        PrintdApplication application = PrintdApplication.get(context);
-                        application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, url, context.getString(R.string.andrews_octoprint_api_secret)));
-                        if (intentToCall != null) {
-                            context.startActivity(intentToCall);
+                        if (mSelectedItem != -1) {
+                            stopDiscovery();
+                            NewNSDInfo s = services.getItem(mSelectedItem);
+                            String url = "http://" + s.getBaseUrl() + "/";
+                            PrintdApplication application = PrintdApplication.get(context);
+                            application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, url, context.getString(R.string.andrews_octoprint_api_secret)));
+                            if (intentToCall != null) {
+                                context.startActivity(intentToCall);
+                            }
                         }
+
+                        // TODO remove this for "release" distribution
+                        else {
+                            String url = "http://localhost/";
+                            PrintdApplication application = PrintdApplication.get(context);
+                            application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, url, context.getString(R.string.andrews_octoprint_api_secret)));
+                            Toast.makeText(context, "This is for demonstration purposes only!!", Toast.LENGTH_LONG).show();
+
+                            if (intentToCall != null) {
+                                context.startActivity(intentToCall);
+                            }
+                        }
+
                     }
-
-                }
-            });
-            builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // User cancelled the dialog
-                }
-            });
+                });
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
 
 
-            // Create the AlertDialog
-            AlertDialog dialog = builder.create();
-            dialog.show();
+                // Create the AlertDialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
         }
         else
         {
@@ -258,18 +304,17 @@ public class MainViewModel implements ViewModel {
             public void onServiceFound(NsdServiceInfo service) {
                 // A service was found!  Do something with it.
                 Log.d(TAG, "Service discovery success" + service);
-                if (service.getServiceName().contains("")) {
-                    // The name of the service tells the user what they'd be
-                    // connecting to. It could be "Bob's Chat App".
+
+                // The name of the service tells the user what they'd be
+                // connecting to. It could be "Bob's Chat App".
 
 //                    new AddNsdServiceInfoTask().execute(new NewNSDInfo(service));
 //                        services.add(service);
 
-                    mNsdManager.resolveService(service, mResolveListener);
+                mNsdManager.resolveService(service, mResolveListener);
 
 
-                    Log.d(TAG, "Name: " + service.getServiceName());
-                }
+                Log.d(TAG, "Name: " + service.getServiceName());
             }
 
             @Override
@@ -313,6 +358,7 @@ public class MainViewModel implements ViewModel {
                 Log.e(TAG, "Resolve Succeeded. " + serviceInfo);
 
 
+                // Have to use an async task to avoid setting something on a thread that doesn't own it
                 new AddNsdServiceInfoTask().execute(new NewNSDInfo(serviceInfo));
             }
         };
@@ -328,6 +374,7 @@ public class MainViewModel implements ViewModel {
         try {
             mNsdManager.discoverServices(
                     SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, mDiscoveryListener);
+            discoveringServices = true;
         }
         catch (Exception error) {
             System.out.println(error);
@@ -337,8 +384,11 @@ public class MainViewModel implements ViewModel {
 
     public void stopDiscovery() {
         mNsdManager.stopServiceDiscovery(mDiscoveryListener);
+        discoveringServices = false;
     }
 
+
+    // A subclass is used so that the services list is accessable
     class AddNsdServiceInfoTask extends AsyncTask<NewNSDInfo, NewNSDInfo, Void> {
         @Override
         protected Void doInBackground(NewNSDInfo... params) {
@@ -349,10 +399,11 @@ public class MainViewModel implements ViewModel {
             return null;
         }
 
-        @SuppressWarnings("unchecked")
+        //@SuppressWarnings("unchecked")
         protected void onProgressUpdate(NewNSDInfo... item) {
             for (int i = 0; i < services.getCount(); i++) {
-                if (services.getItem(i).toString().equals(item.toString()) )
+                if (services.getItem(i).toString() == null &&
+                        services.getItem(i).toString().equals(item.toString()) )
                 {
                     return;
                 }
