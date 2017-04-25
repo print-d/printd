@@ -25,6 +25,7 @@ import com.printdinc.printd.service.ThingiverseAuthServiceGenerator;
 import com.printdinc.printd.service.ThingiverseService;
 import com.printdinc.printd.service.ThingiverseServiceGenerator;
 import com.printdinc.printd.view.BedLevelActivity;
+import com.printdinc.printd.view.PrintStatusActivity;
 import com.printdinc.printd.view.ThingiverseCollectionsActivity;
 
 import java.util.regex.Matcher;
@@ -155,39 +156,7 @@ public class MainViewModel implements ViewModel {
     }
 
     public void onClickCheckPrintStatus(View view) {
-        octoprintInit(null);
-        getJobStatus();
-    }
-
-    private void getJobStatus() {
-        if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
-        PrintdApplication application = PrintdApplication.get(context);
-        OctoprintService octoprintService = application.getOctoprintService();
-        subscription = octoprintService.getJobInformation()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(application.defaultSubscribeScheduler())
-                .subscribe(new Subscriber<JobStatus>() {
-                    @Override
-                    public void onCompleted() {
-                        Log.e(TAG, "completed!");
-                    }
-
-                    @Override
-                    public void onError(Throwable error) {
-                        Log.e(TAG, "Error printing", error);
-                    }
-
-                    @Override
-                    public void onNext(JobStatus js) {
-                        // Winning again?
-                        JobStatusState jss = js.getProgress();
-                        // jss.getCompletion
-                        // jss.getFilepos
-                        // jss.getPrintTime
-                        // jss.getPrintTimeLeft
-
-                    }
-                });
+        octoprintInit(PrintStatusActivity.newIntent(context));
     }
 
     public void promptBedLevel() {
@@ -236,7 +205,9 @@ public class MainViewModel implements ViewModel {
                         String url = "http://" + s.getBaseUrl() + "/";
                         PrintdApplication application = PrintdApplication.get(context);
                         application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, url, context.getString(R.string.andrews_octoprint_api_secret)));
-                        context.startActivity(intentToCall);
+                        if (intentToCall != null) {
+                            context.startActivity(intentToCall);
+                        }
                     }
 
                 }
@@ -254,7 +225,9 @@ public class MainViewModel implements ViewModel {
         }
         else
         {
-            context.startActivity(intentToCall);
+            if (intentToCall != null) {
+                context.startActivity(intentToCall);
+            }
         }
 
     }
@@ -348,8 +321,14 @@ public class MainViewModel implements ViewModel {
     }
 
     public void discoverServices() {
-        mNsdManager.discoverServices(
-                SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, mDiscoveryListener);
+        try {
+            mNsdManager.discoverServices(
+                    SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, mDiscoveryListener);
+        }
+        catch (Exception error) {
+            System.out.println(error);
+        }
+
     }
 
     public void stopDiscovery() {

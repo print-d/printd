@@ -68,6 +68,13 @@
             android:parentActivityName=".view.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".view.PrintStatusActivity"
+            android:label="Print Status"
+            android:launchMode="singleTop"
+            android:parentActivityName=".view.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="nosensor"/>
     </application>
 
 </manifest>
