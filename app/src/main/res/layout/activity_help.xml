@@ -9,89 +9,152 @@
             type="com.printdinc.printd.viewmodel.HelpViewModel"/>
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:activity=".MainActivity">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:activity=".MainActivity">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/appbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                android:minHeight="?attr/actionBarSize"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+                android:theme="@style/AppTheme.AppBarOverlay">
 
-        </android.support.design.widget.AppBarLayout>
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorPrimary"
+                    android:minHeight="?attr/actionBarSize"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-        <TextView
-            android:id="@+id/question1"
-            android:text="@string/helpquestion1"
-            android:clickable="true"
-            android:onClick="@{viewModel.onClickQuestion1}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            </android.support.design.widget.AppBarLayout>
 
-        <TextView
-            android:id="@+id/answer1"
-            android:text="@string/helpanswer1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="@{viewModel.answer1Visibility}"/>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/question2"
-            android:onClick="@{viewModel.onClickQuestion2}"
-            android:text="@string/helpquestion2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/answer2"
-            android:text="@string/helpanswer2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="@{viewModel.answer2Visibility}"/>
+                    <Button
+                        android:id="@+id/question1"
+                        android:text="@string/helpquestion1"
+                        android:clickable="true"
+                        android:background="@color/white"
+                        android:onClick="@{viewModel.onClickQuestion1}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
 
-        <TextView
-            android:id="@+id/question3"
-            android:text="@string/helpquestion3"
-            android:onClick="@{viewModel.onClickQuestion3}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/answer1"
+                        android:text="@string/helpanswer1"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{viewModel.answer1Visibility}"/>
 
-        <TextView
-            android:id="@+id/answer3"
-            android:text="@string/helpanswer3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="@{viewModel.answer3Visibility}"/>
+                    <Button
+                        android:id="@+id/question2"
+                        android:onClick="@{viewModel.onClickQuestion2}"
+                        android:text="@string/helpquestion2"
+                        android:clickable="true"
+                        android:background="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
 
-        <TextView
-            android:id="@+id/question4"
-            android:text="@string/helpquestion4"
-            android:onClick="@{viewModel.onClickQuestion4}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/answer2"
+                        android:text="@string/helpanswer2"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{viewModel.answer2Visibility}"/>
 
-        <TextView
-            android:id="@+id/answer4"
-            android:text="@string/helpanswer4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="@{viewModel.answer4Visibility}"/>
+                    <ImageView
+                        android:id="@+id/answer2_image"
+                        android:padding="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:visibility="@{viewModel.answer2Visibility}"
+                        android:src="@drawable/how_to_get_octoprint_api_key"/>
+
+                    <Button
+                        android:id="@+id/question3"
+                        android:text="@string/helpquestion3"
+                        android:clickable="true"
+                        android:background="@color/white"
+                        android:onClick="@{viewModel.onClickQuestion3}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/answer3"
+                        android:text="@string/helpanswer3"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{viewModel.answer3Visibility}"/>
+
+                    <Button
+                        android:id="@+id/question4"
+                        android:text="@string/helpquestion4"
+                        android:clickable="true"
+                        android:background="@color/white"
+                        android:onClick="@{viewModel.onClickQuestion4}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/answer4"
+                        android:text="@string/helpanswer4"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{viewModel.answer4Visibility}"/>
+
+                    <TextView
+                        android:id="@+id/answer4_link"
+                        android:text="http://octoprint.org/download/"
+                        android:textSize="20dp"
+                        android:autoLink="web"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{viewModel.answer4Visibility}"/>
+
+
+                </LinearLayout>
 
 
 
+            </ScrollView>
 
-    </LinearLayout>
+        </LinearLayout>
+
+
+
 
 </layout>

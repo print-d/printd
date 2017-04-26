@@ -36,14 +36,14 @@
     <string name="bed_level_instructions">When the printer head stops you may begin.\n\n
         Put a piece of paper underneath the nozzle. Adjust that corner of the bed until there is
         slight resistance on the paper from the nozzle.</string>
-    <string name="helpquestion1">Question 1</string>
-    <string name="helpanswer1">Test answer 1</string>
-    <string name="helpquestion2">Question 2</string>
-    <string name="helpanswer2">Test answer 2</string>
-    <string name="helpquestion3">Question 3</string>
-    <string name="helpanswer3">Test answer 3</string>
-    <string name="helpquestion4">Question 4</string>
-    <string name="helpanswer4">Test answer 4</string>
+    <string name="helpquestion1">What is print(d)?</string>
+    <string name="helpanswer1">"print(d) is an all-in-one 3D printer utility app. Currently there are just too many steps involved with 3D printing. Once set up, print(d) takes care of all of that for you. All you have to do is choose what to print and the rest is up to us."</string>
+    <string name="helpquestion2">Where do I find my OctoPrint API key?</string>
+    <string name="helpanswer2">The API key can be found in the OctoPrint settings. Also ensure to check the checkbox labelled "Enable"</string>
+    <string name="helpquestion3">Why do I need a Thingiverse account?</string>
+    <string name="helpanswer3">Thingiverse has an open API which we integrate with. Because of this we are able to pull the items from your Thingiverse collection and print them.</string>
+    <string name="helpquestion4">How do I set up OctoPrint on my Raspberry Pi?</string>
+    <string name="helpanswer4">There are directions on the OctoPrint site here:</string>
     <string name="printstatus_completion">Percent complete</string>
     <string name="printstatus_filepos">Filepos</string>
     <string name="printstatus_print_time">Print time</string>

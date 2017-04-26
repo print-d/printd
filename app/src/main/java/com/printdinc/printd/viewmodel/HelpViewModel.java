@@ -37,10 +37,10 @@ public class HelpViewModel implements ViewModel {
     private static final String TAG = "MainViewModel";
 
     private Context context;
-    public int answer1Visibility;
-    public int answer2Visibility;
-    public int answer3Visibility;
-    public int answer4Visibility;
+    public ObservableInt answer1Visibility;
+    public ObservableInt answer2Visibility;
+    public ObservableInt answer3Visibility;
+    public ObservableInt answer4Visibility;
 
 
 
@@ -48,10 +48,10 @@ public class HelpViewModel implements ViewModel {
     public HelpViewModel(Context context) {
 
         this.context = context;
-        answer1Visibility = View.GONE;
-        answer2Visibility = View.GONE;
-        answer3Visibility = View.GONE;
-        answer4Visibility = View.GONE;
+        answer1Visibility = new ObservableInt(View.GONE);
+        answer2Visibility = new ObservableInt(View.GONE);
+        answer3Visibility = new ObservableInt(View.GONE);
+        answer4Visibility = new ObservableInt(View.GONE);
 
     }
 
@@ -63,26 +63,34 @@ public class HelpViewModel implements ViewModel {
 
 
     public void onClickQuestion1(View view) {
-        if (answer1Visibility == View.GONE) {
-            answer1Visibility = View.VISIBLE;
+        if (answer1Visibility.get() == View.GONE) {
+            answer1Visibility.set(View.VISIBLE);
+        } else {
+            answer1Visibility.set(View.GONE);
         }
     }
 
     public void onClickQuestion2(View view) {
-        if (answer2Visibility == View.GONE) {
-            answer2Visibility = View.VISIBLE;
+        if (answer2Visibility.get() == View.GONE) {
+            answer2Visibility.set(View.VISIBLE);
+        } else {
+            answer2Visibility.set(View.GONE);
         }
     }
 
     public void onClickQuestion3(View view) {
-        if (answer3Visibility == View.GONE) {
-            answer3Visibility = View.VISIBLE;
+        if (answer3Visibility.get() == View.GONE) {
+            answer3Visibility.set(View.VISIBLE);
+        } else {
+            answer3Visibility.set(View.GONE);
         }
     }
 
     public void onClickQuestion4(View view) {
-        if (answer4Visibility == View.GONE) {
-            answer4Visibility = View.VISIBLE;
+        if (answer4Visibility.get() == View.GONE) {
+            answer4Visibility.set(View.VISIBLE);
+        } else {
+            answer4Visibility.set(View.GONE);
         }
     }
 

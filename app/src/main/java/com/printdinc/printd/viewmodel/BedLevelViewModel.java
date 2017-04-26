@@ -50,11 +50,14 @@ public class BedLevelViewModel implements ViewModel {
 
     public ObservableInt progressVisibility;
 
+    public ObservableInt image_visibility;
+
 
     public BedLevelViewModel(Context context, Activity activity) {
         this.context = context;
         this.activity = activity;
         progressVisibility = new ObservableInt(View.INVISIBLE);
+        image_visibility = new ObservableInt(View.GONE);
         //makeSurePrinterIsConnectedForBedLevel();
         buttonText = new ObservableField<String>(context.getString(R.string.start));
         instructionsText = new ObservableField<String>(context.getString(R.string.bed_level_start_instructions));
@@ -147,6 +150,7 @@ public class BedLevelViewModel implements ViewModel {
                         public void onClick(DialogInterface dialog, int which) {
                             current_step++;
                             instructionsText.set(context.getString(R.string.bed_level_instructions));
+                            image_visibility.set(View.VISIBLE);
                             buttonText.set(context.getString(R.string.nextstep));
                         }
                     })
