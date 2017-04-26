@@ -5,8 +5,9 @@
     <color name="very_light_grey">#e0e0e0</color>
     <color name="primary">#3d84c6</color>
     <color name="primary_dark">#3B4849</color>
-    <color name="accent">#ED5F5F</color>
+    <color name="accent">#3B4849</color>
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#727272</color>
     <color name="divider">#cbcbcb</color>
+    <color name ="green">#5FB445</color>
 </resources>
