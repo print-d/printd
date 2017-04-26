@@ -33,6 +33,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/primary_text"
             android:textSize="24sp"
+            android:paddingLeft="20dp"
             android:layout_marginTop="36dp"
             android:layout_below="@+id/toolbar"
             android:layout_alignStart="@+id/textView2" />
@@ -41,7 +42,7 @@
             android:id="@+id/usernameInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
+            android:ems="9"
             android:inputType="textPersonName"
             android:textColor="@color/secondary_text"
             android:text="@={viewModel.usernameText}"
@@ -58,6 +59,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/primary_text"
             android:textSize="24sp"
+            android:paddingLeft="20dp"
             android:layout_marginTop="102dp"
             android:layout_below="@+id/textView"
             android:layout_toStartOf="@+id/usernameInput"
@@ -81,8 +83,11 @@
             android:text="@string/login"
             android:onClick="@{viewModel.onClickLogin}"
             android:layout_marginTop="61dp"
-            android:layout_below="@+id/textView2"
-            android:layout_toEndOf="@+id/textView" />
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/btn_createaccount"
+            android:layout_marginBottom="10dp"
+            android:layout_alignStart="@+id/btn_createaccount"
+            android:layout_alignEnd="@+id/btn_createaccount"/>
 
         <Button
             android:id="@+id/btn_createaccount"
@@ -94,10 +99,10 @@
             android:cursorVisible="true"
             android:linksClickable="true"
             android:onClick="@{viewModel.onClickCreateAccount}"
-            android:layout_below="@+id/btn_complete"
-            android:layout_alignStart="@+id/textView2"
-            android:layout_marginStart="79dp"
-            android:layout_marginTop="48dp" />
+            android:paddingBottom="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="18dp" />
 
 
 
