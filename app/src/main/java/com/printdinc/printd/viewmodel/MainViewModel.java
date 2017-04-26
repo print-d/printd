@@ -26,6 +26,7 @@ import com.printdinc.printd.service.ThingiverseAuthServiceGenerator;
 import com.printdinc.printd.service.ThingiverseService;
 import com.printdinc.printd.service.ThingiverseServiceGenerator;
 import com.printdinc.printd.view.BedLevelActivity;
+import com.printdinc.printd.view.EditAccountActivity;
 import com.printdinc.printd.view.LoginActivity;
 import com.printdinc.printd.view.PrintStatusActivity;
 import com.printdinc.printd.view.ThingiverseCollectionsActivity;
@@ -168,6 +169,9 @@ public class MainViewModel implements ViewModel {
 
     public void onClickLoginAccount(View view) {
         context.startActivity(LoginActivity.newIntent(context));
+    }
+    public void onClickEditAccount(View view) {
+        context.startActivity(EditAccountActivity.newIntent(context));
     }
     public void onClickCheckPrintStatus(View view) {
         octoprintInit(PrintStatusActivity.newIntent(context));

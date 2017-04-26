@@ -21,6 +21,12 @@ public interface HerokuService {
     @GET("printerdata/")
     Observable<PrinterData> printerData();
 
+    @POST("userdata/")
+    Observable<String> editUser(@Body User user);
+
+    @GET("userdata/")
+    Observable<User> getUser();
+
     @GET("dimensions/")
     Observable<Printer> printerDimensions(@Body Printer printer_param);
 
