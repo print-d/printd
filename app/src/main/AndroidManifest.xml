@@ -15,13 +15,15 @@
             android:name=".view.MainActivity"
             android:label="print(d)"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="nosensor">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.NoActionBar">
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -38,61 +40,69 @@
             android:label="Select a Collection"
             android:launchMode="singleTop"
             android:parentActivityName=".view.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.ThingiverseCollectionActivity"
             android:label="print(d)"
             android:launchMode="singleTop"
             android:parentActivityName=".view.ThingiverseCollectionsActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.ThingiverseThingActivity"
             android:label="Select File to Print"
             android:launchMode="singleTop"
             android:parentActivityName=".view.ThingiverseCollectionActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.CreateAccountActivity"
             android:label="Create Account"
             android:launchMode="singleTop"
             android:parentActivityName=".view.LoginActivity"
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.EditAccountActivity"
+            android:label="Edit Account"
+            android:launchMode="singleTop"
+            android:parentActivityName=".view.MainActivity"
+            android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.BedLevelActivity"
             android:label="Bed Level"
             android:launchMode="singleTop"
             android:parentActivityName=".view.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.HelpActivity"
             android:label="Help"
             android:launchMode="singleTop"
             android:parentActivityName=".view.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.PrintStatusActivity"
             android:label="Print Status"
             android:launchMode="singleTop"
             android:parentActivityName=".view.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.LoginActivity"
             android:label="print(d)"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

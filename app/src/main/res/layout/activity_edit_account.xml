@@ -1,0 +1,159 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.printdinc.printd.viewmodel.EditAccountViewModel"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/very_light_grey"
+        tools:context=".MainActivity">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="75dp"
+            android:dividerPadding="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+
+            <TableRow
+                android:padding="10dp">
+
+            <TextView
+                android:id="@+id/passwordText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/accountPassword"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="@color/primary_text"
+                android:textSize="24sp" />
+
+                <EditText
+                    android:id="@+id/passwordInput"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPassword"
+                    android:text="@={viewModel.passwordText}" />
+            </TableRow>
+
+            <TableRow
+                android:padding="10dp">
+                <TextView
+                    android:id="@+id/confirmText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/confirmPassword"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textColor="@color/primary_text"
+                    android:textSize="24sp" />
+
+                <EditText
+                        android:id="@+id/confirmInput"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPassword"
+                        android:text="@={viewModel.confirmText}" />
+            </TableRow>
+
+            <TableRow
+                android:padding="10dp">
+                <TextView
+                    android:id="@+id/apiText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/octoKey"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textColor="@color/primary_text"
+                    android:textSize="24sp" />
+
+                <EditText
+                        android:id="@+id/apiKeyInput"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="7"
+                        android:inputType="textPersonName"
+                        android:text="@={viewModel.apiText}" />
+            </TableRow>
+
+            <TableRow
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/makeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/printerMake"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textColor="@color/primary_text"
+                    android:textSize="24sp" />
+
+                <Spinner
+                    android:id="@+id/makeSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:entries="@{viewModel.makeEntries2}"
+                    android:selectedItemPosition="@={viewModel.selectedMakePosition2}"
+                    android:textColor="@color/primary"/>
+            </TableRow>
+
+            <TableRow
+                android:padding="10dp">
+                <TextView
+                    android:id="@+id/modelText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/printerModel"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textColor="@color/primary_text"
+                    android:textSize="24sp" />
+
+                <Spinner
+                    android:id="@+id/modelSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:entries="@{viewModel.modelEntries2}"
+                    android:selectedItemPosition="@={viewModel.selectedModelPosition2}"
+                    android:textColor="@color/primary" />
+            </TableRow>
+
+            <Button
+                android:id="@+id/btn_complete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:backgroundTint="@color/white"
+                android:clickable="true"
+                android:cursorVisible="true"
+                android:linksClickable="true"
+                android:onClick="@{viewModel.onClickComplete}"
+                android:text="@string/createAccount"
+                android:layout_gravity="center"
+                android:textColor="@color/primary" />
+
+        </TableLayout>
+
+
+    </RelativeLayout>
+
+</layout>
