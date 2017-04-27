@@ -32,7 +32,7 @@ public interface HerokuService {
     Observable<User> getUser();
 
     @GET("dimensions/")
-    Observable<Printer> printerDimensions(@Body Printer printer_param);
+    Observable<Printer> printerDimensions();
 
     @GET("userdata/")
     Observable<User> getUserData();
