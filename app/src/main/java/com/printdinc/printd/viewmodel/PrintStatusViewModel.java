@@ -99,9 +99,9 @@ public class PrintStatusViewModel implements ViewModel {
                         JobStatusState jss = js.getProgress();
 
                         // This comes in as a double. Casting it to int to make it round.
-                        completion.set(String.valueOf((int)jss.getCompletion()) + "%");
-                        printTime.set(String.valueOf(jss.getPrintTime() / 60) + " min.");
-                        printTimeLeft.set(String.valueOf(jss.getPrintTimeLeft() / 60) + " min.");
+                        completion.set(String.valueOf((int)jss.getCompletion()));
+                        printTime.set(String.valueOf(jss.getPrintTime() / 60));
+                        printTimeLeft.set(String.valueOf(jss.getPrintTimeLeft() / 60));
                     }
                 });
     }

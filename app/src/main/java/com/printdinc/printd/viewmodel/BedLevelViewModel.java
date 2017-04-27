@@ -16,7 +16,10 @@ import com.printdinc.printd.databinding.ActivityBedLevelBinding;
 import com.printdinc.printd.model.ConnectionState;
 import com.printdinc.printd.model.ConnectionStateState;
 import com.printdinc.printd.model.PrintHeadCommand;
+import com.printdinc.printd.model.Printer;
+import com.printdinc.printd.model.PrinterData;
 import com.printdinc.printd.model.SimpleCommand;
+import com.printdinc.printd.service.HerokuService;
 import com.printdinc.printd.service.OctoprintService;
 
 import java.util.ArrayList;
@@ -61,7 +64,7 @@ public class BedLevelViewModel implements ViewModel {
         makeSurePrinterIsConnectedForBedLevel();
         buttonText = new ObservableField<String>(context.getString(R.string.start));
         instructionsText = new ObservableField<String>(context.getString(R.string.bed_level_start_instructions));
-        printer_dimensions = get_printer_dimensions_from_server();
+        get_printer_dimensions_from_server();
         current_step = 1;
     }
 
@@ -76,9 +79,34 @@ public class BedLevelViewModel implements ViewModel {
         context = null;
     }
 
-    private int[] get_printer_dimensions_from_server() {
-        // Placeholder for now
-        return new int[]{200, 200, 180};
+    private void get_printer_dimensions_from_server() {
+        printer_dimensions = new int[3];
+        if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
+        PrintdApplication application = PrintdApplication.get(context);
+        HerokuService herokuService = application.getHerokuService();
+        subscription = herokuService.printerDimensions()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(application.defaultSubscribeScheduler())
+                .subscribe(new Subscriber<Printer>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.e(TAG, "completed!");
+                    }
+
+                    @Override
+                    public void onError (Throwable error){
+                        Log.e(TAG, "Error getting printerdata", error);
+
+                    }
+
+                    @Override
+                    public void onNext(Printer printer) {
+                        Log.i(TAG, "ResponseBody loaded");
+                        printer_dimensions[0] = printer.getXSize();
+                        printer_dimensions[1] = printer.getYSize();
+                        printer_dimensions[2] = printer.getZSize();
+                    }
+                });
     }
 
     private void doPrintHeadCommand(PrintHeadCommand phc) {
@@ -148,6 +176,7 @@ public class BedLevelViewModel implements ViewModel {
                     })
                     .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
+                            firstStep();
                             current_step++;
                             instructionsText.set(context.getString(R.string.bed_level_instructions));
                             image_visibility.set(View.VISIBLE);
@@ -183,16 +212,16 @@ public class BedLevelViewModel implements ViewModel {
     private void moveToNextCorner() {
         int x = 0, y = 0;
         switch(current_step) {
-            case 1:
+            case 2:
                 x = printer_dimensions[0] - 10;
                 y = 0;
                 break;
-            case 2:
+            case 3:
                 //x = 0;
                 x = printer_dimensions[0] - 10;
                 y = printer_dimensions[1] - 10;
                 break;
-            case 3:
+            case 4:
                 //x = 20 - printer_dimensions[0];
                 x = 0;
                 y = printer_dimensions[1] - 10;

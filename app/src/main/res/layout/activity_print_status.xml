@@ -40,32 +40,51 @@
             android:clickable="true"
             android:textSize="20dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        </LinearLayout>
         <TextView
             android:id="@+id/completion_answer"
             android:text="@{viewModel.completion}"
             android:clickable="true"
-            android:textSize="20dp"
-            android:layout_marginLeft="25dp"
+            android:textColor="@color/primary"
+            android:textSize="60dp"
             android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/completion"
-            android:layout_below="@id/appbar"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/completion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-
+        <TextView
+            android:id="@+id/percent"
+            android:text="%"
+            android:clickable="true"
+            android:textColor="@color/primary"
+            android:textSize="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/completion"
+            android:layout_toRightOf="@id/completion_answer"
+            android:layout_alignBaseline="@id/completion_answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/printTime"
             android:text="@string/printstatus_print_time"
-            android:layout_below="@+id/completion"
+            android:layout_below="@+id/completion_answer"
             android:clickable="true"
+            android:layout_centerHorizontal="true"
             android:textSize="20dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -73,21 +92,37 @@
             android:id="@+id/printTime_answer"
             android:text="@{viewModel.printTime}"
             android:clickable="true"
-            android:textSize="20dp"
+            android:textSize="60dp"
+            android:textColor="@color/primary"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:layout_below="@+id/completion_answer"
+            android:layout_below="@+id/printTime"
             android:layout_alignLeft="@+id/completion_answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/min1"
+            android:text="min."
+            android:clickable="true"
+            android:textColor="@color/primary"
+            android:textSize="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/printTime"
+            android:layout_toRightOf="@id/printTime_answer"
+            android:layout_alignBaseline="@id/printTime_answer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/printTimeLeft"
             android:text="@string/printstatus_print_time_left"
-            android:layout_below="@+id/printTime"
+            android:layout_below="@+id/printTime_answer"
             android:clickable="true"
+            android:layout_centerHorizontal="true"
             android:textSize="20dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -95,10 +130,25 @@
             android:id="@+id/printTimeLeft_answer"
             android:text="@{viewModel.printTimeLeft}"
             android:clickable="true"
-            android:textSize="20dp"
+            android:textSize="60dp"
+            android:textColor="@color/primary"
             android:layout_marginTop="10dp"
-            android:layout_below="@+id/printTime_answer"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/printTimeLeft"
             android:layout_alignLeft="@+id/printTime_answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/min2"
+            android:text="min."
+            android:clickable="true"
+            android:textColor="@color/primary"
+            android:textSize="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/printTimeLeft"
+            android:layout_toRightOf="@id/printTimeLeft_answer"
+            android:layout_alignBaseline="@id/printTimeLeft_answer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
