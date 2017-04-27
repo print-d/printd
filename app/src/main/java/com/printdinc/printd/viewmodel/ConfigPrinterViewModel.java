@@ -1,5 +1,6 @@
 package com.printdinc.printd.viewmodel;
 
+import android.app.Activity;
 import android.content.Context;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
@@ -33,6 +34,7 @@ public class ConfigPrinterViewModel implements ViewModel {
     public ObservableField<String> infoMessage;
 
     private Context context;
+    private Activity activity;
     private Subscription subscription;
     private List<ConfigFile> files;
     private DataListener dataListener;
@@ -40,8 +42,9 @@ public class ConfigPrinterViewModel implements ViewModel {
     private String currentConfig;
 //    private String editTextUsernameValue;
 
-    public ConfigPrinterViewModel(Context context, DataListener dataListener) {
+    public ConfigPrinterViewModel(Activity context, DataListener dataListener) {
         this.context = context;
+        this.activity = context;
         this.dataListener = dataListener;
         infoMessageVisibility = new ObservableInt(View.VISIBLE);
         progressVisibility = new ObservableInt(View.INVISIBLE);
@@ -67,7 +70,7 @@ public class ConfigPrinterViewModel implements ViewModel {
         dataListener = null;
     }
 
-    private void retrieveCurrentConfig() {
+    public void retrieveCurrentConfig() {
         if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
         PrintdApplication application = PrintdApplication.get(context);
         HerokuService herokuService = application.getHerokuService();
@@ -93,7 +96,6 @@ public class ConfigPrinterViewModel implements ViewModel {
 
                         ConfigFile file = null;
                         for (int i = 0; i < files.size(); i++) {
-                            Log.i(TAG, "Comparing IDs: " + files.get(i).getId() + user.getPrinterconfigid());
                             if (files.get(i).getId().equals(user.getPrinterconfigid()))
                                 ConfigPrinterViewModel.this.configFileName.set(files.get(i).getFilename());
                         }
@@ -146,6 +148,10 @@ public class ConfigPrinterViewModel implements ViewModel {
                         ConfigPrinterViewModel.this.files = files;
                     }
                 });
+    }
+
+    public void onClickBack(View view) {
+        activity.finish();
     }
 
     private static boolean isHttp404(Throwable error) {

@@ -69,6 +69,10 @@ public class ConfigPrinterActivity extends AppCompatActivity implements ConfigPr
 //        hideSoftKeyboard();
     }
 
+    public void refreshCurrent() {
+        configPrinterViewModel.retrieveCurrentConfig();
+    }
+
     private void setupRecyclerView(RecyclerView recyclerView) {
         ConfigFilesAdapter adapter = new ConfigFilesAdapter();
         recyclerView.setAdapter(adapter);

@@ -3,7 +3,6 @@ package com.printdinc.printd.viewmodel;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -13,14 +12,11 @@ import android.view.View;
 import com.google.gson.JsonObject;
 import com.printdinc.printd.PrintdApplication;
 import com.printdinc.printd.model.ConfigFile;
-import com.printdinc.printd.model.ConnectionState;
-import com.printdinc.printd.model.ConnectionStateState;
 import com.printdinc.printd.model.PrinterProfile;
-import com.printdinc.printd.model.SimpleCommand;
 import com.printdinc.printd.model.User;
 import com.printdinc.printd.service.HerokuService;
 import com.printdinc.printd.service.OctoprintService;
-import com.printdinc.printd.view.MainActivity;
+import com.printdinc.printd.view.ConfigPrinterActivity;
 
 import okhttp3.ResponseBody;
 import rx.Subscriber;
@@ -38,13 +34,15 @@ public class ItemConfigFileViewModel extends BaseObservable implements ViewModel
 
     private ConfigFile file;
     private Context context;
+    private ConfigPrinterActivity activity;
     private Subscription subscription;
 
     private ProgressDialog progressDialog;
     private Handler progressHandler;
 
-    public ItemConfigFileViewModel(Context context, ConfigFile file) {
+    public ItemConfigFileViewModel(ConfigPrinterActivity context, ConfigFile file) {
         this.file = file;
+        this.activity = context;
         this.context = context;
     }
 
@@ -67,7 +65,7 @@ public class ItemConfigFileViewModel extends BaseObservable implements ViewModel
                         progressDialog.setMessage("Sending to printer...");
                         progressDialog.setProgressStyle(progressDialog.STYLE_HORIZONTAL);
                         progressDialog.setProgress(0);
-                        progressDialog.setMax(5);
+                        progressDialog.setMax(3);
                         progressDialog.setCancelable(false);
                         progressDialog.setCanceledOnTouchOutside(false);
                         progressDialog.show();
@@ -107,6 +105,7 @@ public class ItemConfigFileViewModel extends BaseObservable implements ViewModel
                     @Override
                     public void onNext(String s) {
 
+                        progressDialog.incrementProgressBy(1);
                         // Download the config file to be uploaded
                         downloadFile();
 
@@ -127,99 +126,6 @@ public class ItemConfigFileViewModel extends BaseObservable implements ViewModel
                     }
                 })
                 .show();
-    }
-
-    private void makeSurePrinterIsConnectedForUpload(final PrinterProfile printerProfile) {
-        makeSurePrinterIsConnectedForUpload(printerProfile, 0);
-    }
-
-    private void makeSurePrinterIsConnectedForUpload(final PrinterProfile printerProfile, final int depth) {
-        progressDialog.setMessage("Connecting to printer...");
-        if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
-        PrintdApplication application = PrintdApplication.get(context);
-        OctoprintService octoprintService = application.getOctoprintService();
-        subscription = octoprintService.getConnectionState()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(application.defaultSubscribeScheduler())
-                .subscribe(new Subscriber<ConnectionState>() {
-                    @Override
-                    public void onCompleted() {
-                        Log.e(TAG, "completed!");
-                    }
-
-                    @Override
-                    public void onError(Throwable error) {
-                        Log.e(TAG, "Error printing", error);
-                        errorPrinting();
-                    }
-
-                    @Override
-                    public void onNext(ConnectionState cs) {
-
-                        ConnectionStateState realCS = cs.getCurrent();
-
-                        if (realCS.getState().equals("Connecting"))
-                        {
-                            try {
-//                                Thread.sleep(5000l);
-                                makeSurePrinterIsConnectedForUpload(printerProfile, depth + 1);
-                            }
-                            catch(Exception e) {
-                                errorPrinting();
-                            }
-                        }
-                        else if (!realCS.getState().equals("Operational")) {
-
-                            if (realCS.getState().startsWith("Error") && depth > 0)
-                            {
-                                errorPrinting();
-                            }
-                            else {
-                                connectPrinterForUpload(printerProfile, depth);
-                            }
-
-                        }
-                        else
-                        {
-                            progressDialog.incrementProgressBy(1);
-
-                            uploadFile(printerProfile);
-                        }
-
-                    }
-                });
-    }
-
-    private void connectPrinterForUpload(final PrinterProfile printerProfile, final int depth) {
-        if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
-        PrintdApplication application = PrintdApplication.get(context);
-        OctoprintService octoprintService = application.getOctoprintService();
-        subscription = octoprintService.connectCommand(new SimpleCommand("connect"))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(application.defaultSubscribeScheduler())
-                .subscribe(new Subscriber<ResponseBody>() {
-                    @Override
-                    public void onCompleted() {
-                        Log.e(TAG, "completed!");
-                    }
-
-                    @Override
-                    public void onError(Throwable error) {
-                        Log.e(TAG, "Error printing", error);
-                        errorPrinting();
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody cs) {
-                        try {
-//                            Thread.sleep(5000l);
-                            makeSurePrinterIsConnectedForUpload(printerProfile, depth + 1);
-                        }
-                        catch (Exception e) {
-                            makeSurePrinterIsConnectedForUpload(printerProfile, depth + 1);
-                        }
-                    }
-                });
     }
 
     // Allows recycling ItemRepoViewModels within the recyclerview adapter
@@ -255,6 +161,8 @@ public class ItemConfigFileViewModel extends BaseObservable implements ViewModel
                     public void onNext(JsonObject obj) {
                         Log.i(TAG, "Got the object" + obj.toString());
 
+                        progressDialog.incrementProgressBy(1);
+
                         uploadFile(new PrinterProfile("printd", "print(d) profile", true, obj));
                     }
                 });
@@ -288,17 +196,19 @@ public class ItemConfigFileViewModel extends BaseObservable implements ViewModel
 
                         if (progressDialog.getProgress() == progressDialog.getMax()) {
                             progressDialog.dismiss();
+
+                            activity.refreshCurrent();
+
                             new AlertDialog.Builder(context)
                                     .setIcon(0)
                                     .setTitle("Print file")
                                     .setMessage("The file was successfully uploaded!\nThe profile has been saved.")
-                                    .setCancelable(false)
                                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
-                                            Intent newIntent = new Intent(context,MainActivity.class);
-                                            newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            context.startActivity(newIntent);
+//                                            Intent newIntent = new Intent(context,MainActivity.class);
+//                                            newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                                            newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                            context.startActivity(newIntent);
                                         }
                                     })
                                     .show();

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.printdinc.printd.R;
 import com.printdinc.printd.databinding.ItemConfigFileBinding;
 import com.printdinc.printd.model.ConfigFile;
+import com.printdinc.printd.view.ConfigPrinterActivity;
 import com.printdinc.printd.viewmodel.ItemConfigFileViewModel;
 
 import java.util.Collections;
@@ -63,7 +64,7 @@ public class ConfigFilesAdapter extends RecyclerView.Adapter<ConfigFilesAdapter.
 
         void bindFiles(ConfigFile file) {
             if (binding.getViewModel() == null) {
-                binding.setViewModel(new ItemConfigFileViewModel(itemView.getContext(), file));
+                binding.setViewModel(new ItemConfigFileViewModel((ConfigPrinterActivity) itemView.getContext(), file));
             } else {
                 binding.getViewModel().setFile(file);
             }

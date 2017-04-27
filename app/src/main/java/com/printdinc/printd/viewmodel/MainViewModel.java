@@ -301,7 +301,7 @@ public class MainViewModel implements ViewModel {
                                             if (data != null)
                                             {
                                                 stopDiscovery();
-                                                NewNSDInfo s = services.getItem(lastOctopiIndex);
+                                                NewNSDInfo s = services.getItem(lastSelectedItem);
                                                 String url = "http://" + s.getBaseUrl() + "/";
                                                 PrintdApplication application = PrintdApplication.get(context);
                                                 application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, url, data.getOP_APIKey()));
