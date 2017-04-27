@@ -121,8 +121,8 @@ public class BedLevelViewModel implements ViewModel {
             // Finish
             new AlertDialog.Builder(context)
                     .setIcon(0)
-                    .setTitle("Complete Bed Leveling")
-                    .setMessage("Are you finished?")
+                    .setTitle(context.getString(R.string.completebedleveling))
+                    .setMessage(context.getString(R.string.areyoufinished))
                     .setNegativeButton(context.getString(R.string.no), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // Do nothing
@@ -139,8 +139,8 @@ public class BedLevelViewModel implements ViewModel {
         } else if (current_step == 1) {
             new AlertDialog.Builder(context)
                     .setIcon(0)
-                    .setTitle("Begin")
-                    .setMessage("Are you ready to get started?")
+                    .setTitle(context.getString(R.string.begin))
+                    .setMessage(context.getString(R.string.areyoureadytogetstarted))
                     .setNegativeButton(context.getString(R.string.no), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // Do nothing
@@ -158,8 +158,8 @@ public class BedLevelViewModel implements ViewModel {
         } else {
             new AlertDialog.Builder(context)
                     .setIcon(0)
-                    .setTitle("Proceed")
-                    .setMessage("Proceed to the next corner?")
+                    .setTitle(context.getString(R.string.proceed))
+                    .setMessage(context.getString(R.string.proceedtothenextcorner))
                     .setNegativeButton(context.getString(R.string.no), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // Do nothing
@@ -211,8 +211,8 @@ public class BedLevelViewModel implements ViewModel {
         progressVisibility.set(View.INVISIBLE);
         new AlertDialog.Builder(context)
                 .setIcon(0)
-                .setTitle("Error Bed Leveling")
-                .setMessage("There was an error bed leveling.\nMake sure your printer is turned on.")
+                .setTitle(context.getString(R.string.errorbedleveling))
+                .setMessage(context.getString(R.string.errorbedleveling2))
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Go back here

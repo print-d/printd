@@ -21,6 +21,14 @@
     <string name="accountUsername">Username</string>
     <string name="accountPassword">Password</string>
     <string name="confirmPassword">Confirm</string>
+    <string name="completebedleveling">Complete bed leveling</string>
+    <string name="areyoufinished">Are you finished?</string>
+    <string name="begin">Begin</string>
+    <string name="areyoureadytogetstarted">Are you ready to get started?</string>
+    <string name="proceed">Proceed</string>
+    <string name="proceedtothenextcorner">Proceed to the next corner?</string>
+    <string name="errorbedleveling">Error bed leveling</string>
+    <string name="errorbedleveling2">"There was an error bed leveling.\nMake sure your printer is turned on."</string>
     <string name="octoKey">OctoPrint API Key</string>
     <string name="printerMake">3D Printer Make</string>
     <string name="printerModel">3D Printer Model</string>
