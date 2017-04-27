@@ -51,8 +51,10 @@
                 app:srcCompat="@drawable/main_logo" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
                 android:orientation="vertical"
                 android:gravity="center"
                 android:paddingTop="30dp">
@@ -100,7 +102,9 @@
                     android:text="@string/login"
                     android:clickable="true"
                     android:autoLink="web"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
                     android:cursorVisible="true"
                     android:linksClickable="true"
                     android:onClick="@{viewModel.onClickLogin}"
@@ -113,6 +117,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/createAccount"
                     android:layout_marginTop="10dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
                     android:clickable="true"
                     android:autoLink="web"
                     android:cursorVisible="true"
