@@ -64,7 +64,7 @@ public class BedLevelViewModel implements ViewModel {
         makeSurePrinterIsConnectedForBedLevel();
         buttonText = new ObservableField<String>(context.getString(R.string.start));
         instructionsText = new ObservableField<String>(context.getString(R.string.bed_level_start_instructions));
-        printer_dimensions = get_printer_dimensions_from_server();
+        get_printer_dimensions_from_server();
         current_step = 1;
     }
 
@@ -79,13 +79,12 @@ public class BedLevelViewModel implements ViewModel {
         context = null;
     }
 
-    private int[] get_printer_dimensions_from_server() {
-        // Placeholder for now
+    private void get_printer_dimensions_from_server() {
+        printer_dimensions = new int[3];
         if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
         PrintdApplication application = PrintdApplication.get(context);
         HerokuService herokuService = application.getHerokuService();
-        Printer printer = new Printer();
-        subscription = herokuService.printerDimensions(printer)
+        subscription = herokuService.printerDimensions()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(application.defaultSubscribeScheduler())
                 .subscribe(new Subscriber<Printer>() {
@@ -103,7 +102,9 @@ public class BedLevelViewModel implements ViewModel {
                     @Override
                     public void onNext(Printer printer) {
                         Log.i(TAG, "ResponseBody loaded");
-                        return new int[]{printer.getXSize(), printer.getYSize(), printer.getZSize()};
+                        printer_dimensions[0] = printer.getXSize();
+                        printer_dimensions[1] = printer.getYSize();
+                        printer_dimensions[2] = printer.getZSize();
                     }
                 });
     }
