@@ -58,7 +58,7 @@ public class BedLevelViewModel implements ViewModel {
         this.activity = activity;
         progressVisibility = new ObservableInt(View.INVISIBLE);
         image_visibility = new ObservableInt(View.GONE);
-        //makeSurePrinterIsConnectedForBedLevel();
+        makeSurePrinterIsConnectedForBedLevel();
         buttonText = new ObservableField<String>(context.getString(R.string.start));
         instructionsText = new ObservableField<String>(context.getString(R.string.bed_level_start_instructions));
         printer_dimensions = get_printer_dimensions_from_server();
@@ -108,7 +108,7 @@ public class BedLevelViewModel implements ViewModel {
 
     private void firstStep() {
         PrintHeadCommand home_command = new PrintHeadCommand("home", new ArrayList<String>(Arrays.asList("x", "y", "z")), 0, 0, 0, false);
-        //doPrintHeadCommand(home_command);
+        doPrintHeadCommand(home_command);
     }
 
     private PrintHeadCommand jogCommand(int x, int y, int z) {
@@ -168,7 +168,7 @@ public class BedLevelViewModel implements ViewModel {
                     .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // Go to the next corner
-                            //moveToNextCorner();
+                            moveToNextCorner();
                             current_step++;
                             if (current_step == 5) {
                                 buttonText.set(context.getString(R.string.complete));
