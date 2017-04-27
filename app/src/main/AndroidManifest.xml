@@ -103,6 +103,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.ConfigPrinterActivity"
+            android:label="Choose Config File"
+            android:launchMode="singleTop"
+            android:parentActivityName=".view.MainActivity"
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

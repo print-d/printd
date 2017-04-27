@@ -5,13 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.ObservableInt;
 import android.net.Uri;
-import android.net.nsd.NsdManager;
-import android.net.nsd.NsdServiceInfo;
-import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.printdinc.printd.PrintdApplication;
@@ -26,8 +22,6 @@ import com.printdinc.printd.service.ThingiverseAuthServiceGenerator;
 import com.printdinc.printd.service.ThingiverseService;
 import com.printdinc.printd.service.ThingiverseServiceGenerator;
 import com.printdinc.printd.view.BedLevelActivity;
-import com.printdinc.printd.view.EditAccountActivity;
-import com.printdinc.printd.view.LoginActivity;
 import com.printdinc.printd.view.PrintStatusActivity;
 import com.printdinc.printd.view.ThingiverseCollectionsActivity;
 
@@ -49,18 +43,7 @@ public class MainViewModel implements ViewModel {
     private Context context;
     private Subscription subscription;
 
-    private boolean discoveringServices;
-
     public ObservableInt progressVisibility;
-
-    public ArrayAdapter<NewNSDInfo> services;
-    private int mSelectedItem = -1;
-
-    private NsdManager.DiscoveryListener mDiscoveryListener;
-    private NsdManager.ResolveListener mResolveListener;
-    private NsdManager mNsdManager;
-
-    public static final String SERVICE_TYPE = "_http._tcp.";
 
     Pattern token_parse = Pattern.compile("access_token=(.+?)&token_type=(\\w+)");
 
@@ -69,17 +52,9 @@ public class MainViewModel implements ViewModel {
         this.context = context;
         progressVisibility = new ObservableInt(View.INVISIBLE);
 
-        services = new ArrayAdapter<NewNSDInfo>(context, android.R.layout.select_dialog_singlechoice);
-
-        mNsdManager = (NsdManager) context.getSystemService(Context.NSD_SERVICE);
-
-        discoveringServices = false;
-
-        initializeNsd();
-        if (!(discoveringServices)) {
-            discoverServices();
-            discoveringServices = true;
-        }
+        PrintdApplication application = PrintdApplication.get(context);
+        if (application.getOctoprintService() == null)
+            application.discoverServices();
 
     }
 
@@ -167,12 +142,6 @@ public class MainViewModel implements ViewModel {
     }
 
 
-    public void onClickLoginAccount(View view) {
-        context.startActivity(LoginActivity.newIntent(context));
-    }
-    public void onClickEditAccount(View view) {
-        context.startActivity(EditAccountActivity.newIntent(context));
-    }
     public void onClickCheckPrintStatus(View view) {
         octoprintInit(PrintStatusActivity.newIntent(context));
     }
@@ -204,17 +173,13 @@ public class MainViewModel implements ViewModel {
 
 
 
-            if (!(discoveringServices)) {
-                services.clear();
-                discoverServices();
-                discoveringServices = true;
-            }
+            application.discoverServices();
 
             int countOctopis = 0;
             int octopiIndex = -1;
 
-            for (int i = 0; i < services.getCount(); i++) {
-                if (services.getItem(i).toString().contains("OctoPrint")) {
+            for (int i = 0; i < application.getServices().getCount(); i++) {
+                if (application.getServices().getItem(i).toString().contains("OctoPrint")) {
                     countOctopis++;
                     octopiIndex = i;
                 }
@@ -244,10 +209,10 @@ public class MainViewModel implements ViewModel {
                                 Log.i(TAG, "User Data received " + data.getOP_APIKey());
                                 if (data != null)
                                 {
-                                    stopDiscovery();
-                                    NewNSDInfo s = services.getItem(lastOctopiIndex);
-                                    String url = "http://" + s.getBaseUrl() + "/";
                                     PrintdApplication application = PrintdApplication.get(context);
+                                    application.stopDiscovery();
+                                    NewNSDInfo s = application.getServices().getItem(lastOctopiIndex);
+                                    String url = "http://" + s.getBaseUrl() + "/";
                                     application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, url, data.getOP_APIKey()));
                                     if (intentToCall != null) {
                                         context.startActivity(intentToCall);
@@ -265,20 +230,21 @@ public class MainViewModel implements ViewModel {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Select OctoPrint instance");
 //            builder.setMessage("Select an OctoPrint instance from the choices below. If yours does not appear, go to http://octoprint.org/download/");
-                builder.setSingleChoiceItems(services, -1,
+                builder.setSingleChoiceItems(application.getServices(), -1,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                mSelectedItem = which;
+                                PrintdApplication application = PrintdApplication.get(context);
+                                application.mSelectedItem = which;
                             }
                         });
                 builder.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK button
 
-                        if (mSelectedItem != -1) {
-                            final int lastSelectedItem = mSelectedItem;
-                            PrintdApplication application = PrintdApplication.get(context);
+                        PrintdApplication application = PrintdApplication.get(context);
+                        if (application.mSelectedItem != -1) {
+                            final int lastSelectedItem = application.mSelectedItem;
                             HerokuService herokuService = application.getHerokuService();
                             herokuService.getUserData()
                                     .observeOn(AndroidSchedulers.mainThread())
@@ -300,10 +266,10 @@ public class MainViewModel implements ViewModel {
                                             Log.i(TAG, "Token received " + data.getOP_APIKey());
                                             if (data != null)
                                             {
-                                                stopDiscovery();
-                                                NewNSDInfo s = services.getItem(lastOctopiIndex);
-                                                String url = "http://" + s.getBaseUrl() + "/";
                                                 PrintdApplication application = PrintdApplication.get(context);
+                                                application.stopDiscovery();
+                                                NewNSDInfo s = application.getServices().getItem(lastSelectedItem);
+                                                String url = "http://" + s.getBaseUrl() + "/";
                                                 application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, url, data.getOP_APIKey()));
                                                 if (intentToCall != null) {
                                                     context.startActivity(intentToCall);
@@ -317,7 +283,6 @@ public class MainViewModel implements ViewModel {
                         // TODO remove this for "release" distribution
                         else {
                             String url = "http://localhost/";
-                            PrintdApplication application = PrintdApplication.get(context);
                             application.setOctoprintService(OctoprintServiceGenerator.createService(OctoprintService.class, url, ""));
                             Toast.makeText(context, "This is for demonstration purposes only!!", Toast.LENGTH_LONG).show();
 
@@ -354,132 +319,6 @@ public class MainViewModel implements ViewModel {
                 Intent.ACTION_VIEW,
                 Uri.parse(ThingiverseAuthServiceGenerator.AUTH_BASE_URL + "/login/oauth/authorize" + "?client_id=" + context.getString(R.string.client_id) + "&redirect_uri=" + context.getString(R.string.redirect_uri)));
         context.startActivity(intent);
-    }
-
-    public void initializeDiscoveryListener() {
-
-        // Instantiate a new DiscoveryListener
-        mDiscoveryListener = new NsdManager.DiscoveryListener() {
-
-            //  Called as soon as service discovery begins.
-            @Override
-            public void onDiscoveryStarted(String regType) {
-                Log.d(TAG, "Service discovery started");
-            }
-
-            @Override
-            public void onServiceFound(NsdServiceInfo service) {
-                // A service was found!  Do something with it.
-                Log.d(TAG, "Service discovery success" + service);
-
-                // The name of the service tells the user what they'd be
-                // connecting to. It could be "Bob's Chat App".
-
-//                    new AddNsdServiceInfoTask().execute(new NewNSDInfo(service));
-//                        services.add(service);
-
-                mNsdManager.resolveService(service, mResolveListener);
-
-
-                Log.d(TAG, "Name: " + service.getServiceName());
-            }
-
-            @Override
-            public void onServiceLost(NsdServiceInfo service) {
-                // When the network service is no longer available.
-                // Internal bookkeeping code goes here.
-                Log.e(TAG, "service lost" + service);
-
-//                services.remove(service);
-            }
-
-            @Override
-            public void onDiscoveryStopped(String serviceType) {
-                Log.i(TAG, "Discovery stopped: " + serviceType);
-            }
-
-            @Override
-            public void onStartDiscoveryFailed(String serviceType, int errorCode) {
-                Log.e(TAG, "Discovery failed: Error code:" + errorCode);
-                mNsdManager.stopServiceDiscovery(this);
-            }
-
-            @Override
-            public void onStopDiscoveryFailed(String serviceType, int errorCode) {
-                Log.e(TAG, "Discovery failed: Error code:" + errorCode);
-                mNsdManager.stopServiceDiscovery(this);
-            }
-        };
-    }
-
-    public void initializeResolveListener() {
-        mResolveListener = new NsdManager.ResolveListener() {
-
-            @Override
-            public void onResolveFailed(NsdServiceInfo serviceInfo, int errorCode) {
-                Log.e(TAG, "Resolve failed" + errorCode);
-            }
-
-            @Override
-            public void onServiceResolved(NsdServiceInfo serviceInfo) {
-                Log.e(TAG, "Resolve Succeeded. " + serviceInfo);
-
-
-                // Have to use an async task to avoid setting something on a thread that doesn't own it
-                new AddNsdServiceInfoTask().execute(new NewNSDInfo(serviceInfo));
-            }
-        };
-    }
-
-    public void initializeNsd() {
-        initializeDiscoveryListener();
-        initializeResolveListener();
-
-    }
-
-    public void discoverServices() {
-        try {
-            mNsdManager.discoverServices(
-                    SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, mDiscoveryListener);
-            discoveringServices = true;
-        }
-        catch (Exception error) {
-            System.out.println(error);
-        }
-
-    }
-
-    public void stopDiscovery() {
-        mNsdManager.stopServiceDiscovery(mDiscoveryListener);
-        discoveringServices = false;
-    }
-
-
-    // A subclass is used so that the services list is accessable
-    class AddNsdServiceInfoTask extends AsyncTask<NewNSDInfo, NewNSDInfo, Void> {
-        @Override
-        protected Void doInBackground(NewNSDInfo... params) {
-            for (NewNSDInfo item : params) {
-                publishProgress(item);
-            }
-
-            return null;
-        }
-
-        //@SuppressWarnings("unchecked")
-        protected void onProgressUpdate(NewNSDInfo... item) {
-            Log.i(TAG, "onProgressUpdate: " + item[0].toString());
-            for (int i = 0; i < services.getCount(); i++) {
-                if (services.getItem(i).toString() != null &&
-                        services.getItem(i).toString().equals(item[0].toString()) )
-                {
-                    Toast.makeText(context, item[0].toString(), Toast.LENGTH_LONG).show();
-                    return;
-                }
-            }
-            services.add(item[0]);
-        }
-
     }
 
     public void goToThingiverse (View view) {

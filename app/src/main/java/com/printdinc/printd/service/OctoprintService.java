@@ -1,8 +1,9 @@
 package com.printdinc.printd.service;
 
+import com.printdinc.printd.model.ConnectionState;
 import com.printdinc.printd.model.JobStatus;
 import com.printdinc.printd.model.PrintHeadCommand;
-import com.printdinc.printd.model.ConnectionState;
+import com.printdinc.printd.model.PrinterProfile;
 import com.printdinc.printd.model.SimpleCommand;
 import com.printdinc.printd.model.SliceCommand;
 
@@ -13,6 +14,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -40,6 +42,9 @@ public interface OctoprintService {
 
     @GET("api/job")
     Observable<JobStatus> getJobInformation();
+
+    @PUT("/api/slicing/cura/profiles/printd")
+    Observable<ResponseBody> addSlicingProfile(@Body PrinterProfile p);
 
 
 }

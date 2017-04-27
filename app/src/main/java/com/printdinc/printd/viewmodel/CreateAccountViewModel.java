@@ -101,7 +101,7 @@ public class CreateAccountViewModel implements ViewModel{
             PrintdApplication application = PrintdApplication.get(context);
             HerokuService herokuService = application.getHerokuService();
 
-            User newUser = new User(usernameText.get().toString(), passwordText.get().toString(), apiText.get().toString(), makeEntries.get(selectedMakePosition.get()), modelEntries.get(selectedModelPosition.get()));
+            User newUser = new User(usernameText.get().toString(), passwordText.get().toString(), apiText.get().toString(), makeEntries.get(selectedMakePosition.get()), modelEntries.get(selectedModelPosition.get()), null);
             subscription = herokuService.createUser(newUser)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(application.defaultSubscribeScheduler())
