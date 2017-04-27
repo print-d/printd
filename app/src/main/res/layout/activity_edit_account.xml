@@ -135,7 +135,7 @@
                             android:id="@+id/textView8"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingRight="10dp"
+                            android:paddingRight="17dp"
                             android:text="@string/printerMake"
                             android:textAppearance="@style/TextAppearance.AppCompat"
                             android:textColor="@color/white"
