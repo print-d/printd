@@ -53,7 +53,6 @@ public class LoginViewModel implements ViewModel {
         PrintdApplication application = PrintdApplication.get(context);
         HerokuService herokuService = application.getHerokuService();
         //User newUser = new User(usernameText.get().toString(), passwordText.get().toString(), apiText.get().toString(), makeEntries.get(selectedMakePosition.get()), modelEntries.get(selectedModelPosition.get()));
-        Log.i(TAG, usernameText.get().toString() + " " + passwordText.get().toString());
         Login newLogin = new Login(usernameText.get().toString(), passwordText.get().toString());
         subscription = herokuService.login(newLogin)
                 .observeOn(AndroidSchedulers.mainThread())
