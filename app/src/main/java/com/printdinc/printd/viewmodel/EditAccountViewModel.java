@@ -42,6 +42,7 @@ public class EditAccountViewModel implements ViewModel{
     private Subscription subscription;
     private Subscription subscription2;
     private List<Printer> printerList;
+    public User originalUser;
 
 
     public final ObservableField<String> usernameText = new ObservableField<>("");
@@ -136,56 +137,71 @@ public class EditAccountViewModel implements ViewModel{
 
 
     public void onClickComplete (View view) {
-        if (passwordText.get().toString().equals(confirmText.get().toString())) {
-            if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
-            PrintdApplication application = PrintdApplication.get(context);
-            HerokuService herokuService = application.getHerokuService();
+        final User newUser = new User(null, null, null, null, null, null);
 
-            User newUser = new User(usernameText.get().toString(), passwordText.get().toString(), apiText.get().toString(), makeEntries2.get(selectedMakePosition2.get()), modelEntries2.get(selectedModelPosition2.get()), null);
-            subscription = herokuService.createUser(newUser)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(application.defaultSubscribeScheduler())
-                    .subscribe(new Subscriber<String>() {
-                        @Override
-                        public void onCompleted() {
-                            Log.e(TAG, "completed!");
+        PrintdApplication application = PrintdApplication.get(EditAccountViewModel.this.context);
+        HerokuService herokuService = application.getHerokuService();
+        subscription2 = herokuService.getUser()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(application.defaultSubscribeScheduler())
+                .subscribe(new Subscriber<User>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.e(TAG, "completed!");
+                    }
+
+                    @Override
+                    public void onError(Throwable error) {
+                        Log.e(TAG, "Error getting userdata", error);
+
+                    }
+
+                    @Override
+                    public void onNext(User user) {
+                        Log.i(TAG, "ResponseBody loaded");
+
+                        if (!user.getOP_APIKey().toString().equals(apiText.get().toString())) {
+                            newUser.setOp_apikey(apiText.get().toString());
+                        }
+                        if (!user.getModel().toString().equals(modelEntries2.get(selectedModelPosition2.get()))) {
+                            newUser.setModel(modelEntries2.get(selectedModelPosition2.get()));
+                            if (!user.getMake().toString().equals(makeEntries2.get(selectedMakePosition2.get()))) {
+                                newUser.setMake(makeEntries2.get(selectedMakePosition2.get()));
+                            }
+                        }
+                        if (passwordText.get().toString().equals(confirmText.get().toString()) && !passwordText.get().equals("")) {
+                            newUser.setPassword(passwordText.get().toString());
                         }
 
-                        @Override
-                        public void onError (Throwable error){
-                            Log.e(TAG, "Error creating account", error);
+                        if (subscription != null && !subscription.isUnsubscribed())
+                            subscription.unsubscribe();
+                        PrintdApplication application = PrintdApplication.get(context);
+                        HerokuService herokuService = application.getHerokuService();
 
-                        }
+                        subscription = herokuService.editUser(newUser)
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(application.defaultSubscribeScheduler())
+                                .subscribe(new Subscriber<String>() {
+                                    @Override
+                                    public void onCompleted() {
+                                        Log.e(TAG, "completed!");
+                                    }
 
-                        @Override
-                        public void onNext(String r) {
-                            Log.i(TAG, "ResponseBody loaded " + r);
+                                    @Override
+                                    public void onError(Throwable error) {
+                                        Log.e(TAG, "Error creating account", error);
 
-                            PrintdApplication application = PrintdApplication.get(context);
-                            application.setHerokuService(HerokuServiceGenerator.createService(HerokuService.class, r));
-                            activity.finish();
-                        }
-                    });
-        }
-        else {
-            new AlertDialog.Builder(context)
-                    .setIcon(0)
-                    .setTitle("Password Error")
-                    .setMessage("Close account creation?")
-                    .setNegativeButton(context.getString(R.string.no), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Do nothing
-                        }
-                    })
-                    .setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Go back here
-                            activity.finish();
+                                    }
 
-                        }
-                    })
-                    .show();
-        }
+                                    @Override
+                                    public void onNext(String r) {
+                                        Log.i(TAG, "ResponseBody loaded " + r);
+                                        activity.finish();
+                                    }
+                                });
+                    }
+
+                });
     }
 
     public void onClickConfigPrinter(View view) {

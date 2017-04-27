@@ -47,6 +47,8 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:layout_centerInParent="true"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
 
                 app:srcCompat="@drawable/main_logo" />
 
@@ -72,7 +74,7 @@
                         android:layout_height="wrap_content"
                         android:text="@={viewModel.usernameText}"
                         android:inputType="textPersonName"
-                        android:hint="Username"/>
+                        android:hint="@string/accountUsername"/>
 
                 </LinearLayout>
 
@@ -91,7 +93,7 @@
                         android:inputType="textPassword"
                         android:ems="8"
                         android:text="@={viewModel.passwordText}"
-                        android:hint="Password"/>
+                        android:hint="@string/accountPassword"/>
 
                 </LinearLayout>
 

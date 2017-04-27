@@ -69,6 +69,8 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:layout_centerInParent="true"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
 
             app:srcCompat="@drawable/main_logo" />
 

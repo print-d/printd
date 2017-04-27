@@ -23,6 +23,26 @@ public class User {
     @Expose
     private String printerconfigid;
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setOp_apikey(String op_apikey) {
+        this.op_apikey = op_apikey;
+    }
+
+    public void setMake(String make) {
+        this.make = make;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
     public String getUsername() {return username;}
     public String getPassword() {return password;}
     public String getOP_APIKey() {return op_apikey;}
