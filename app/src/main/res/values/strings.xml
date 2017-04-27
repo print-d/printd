@@ -16,6 +16,7 @@
     <string name="checkprintstatus">Check print status</string>
     <string name="nextstep">Next step</string>
     <string name="stlname">printdDownload.stl</string>
+    <string name="ininame">printdDownload.ini</string>
     <string name="location">local</string>
     <string name="sliceCommand">slice</string>
     <string name="accountUsername">Username</string>

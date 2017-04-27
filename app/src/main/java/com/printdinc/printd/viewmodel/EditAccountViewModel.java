@@ -132,7 +132,7 @@ public class EditAccountViewModel implements ViewModel{
             PrintdApplication application = PrintdApplication.get(context);
             HerokuService herokuService = application.getHerokuService();
 
-            User newUser = new User(usernameText.get().toString(), passwordText.get().toString(), apiText.get().toString(), makeEntries2.get(selectedMakePosition2.get()), modelEntries2.get(selectedModelPosition2.get()));
+            User newUser = new User(usernameText.get().toString(), passwordText.get().toString(), apiText.get().toString(), makeEntries2.get(selectedMakePosition2.get()), modelEntries2.get(selectedModelPosition2.get()), null);
             subscription = herokuService.createUser(newUser)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(application.defaultSubscribeScheduler())

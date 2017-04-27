@@ -95,6 +95,21 @@
                 android:textColor="@color/primary"/>
 
             <Button
+                android:id="@+id/btn_config_printer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ASDKLAHSDKJH"
+                android:clickable="true"
+                android:autoLink="web"
+                android:cursorVisible="true"
+                android:linksClickable="true"
+                android:onClick="@{viewModel.onClickConfigPrinter}"
+                android:layout_alignStart="@+id/btn_bedlevel"
+                android:layout_alignEnd="@+id/btn_printstatus"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/primary"/>
+
+            <Button
                 android:id="@+id/btn_bedlevel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

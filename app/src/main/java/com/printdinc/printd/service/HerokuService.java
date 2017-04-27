@@ -1,9 +1,13 @@
 package com.printdinc.printd.service;
 
+import com.google.gson.JsonObject;
+import com.printdinc.printd.model.ConfigFile;
 import com.printdinc.printd.model.Login;
 import com.printdinc.printd.model.Printer;
 import com.printdinc.printd.model.PrinterData;
 import com.printdinc.printd.model.User;
+
+import java.util.List;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -33,8 +37,10 @@ public interface HerokuService {
     @GET("userdata/")
     Observable<User> getUserData();
 
-    //@GET("configfile/")
-    //Observable<>
+    @GET("configfilelist/")
+    Observable<List<ConfigFile>> configFiles();
 
+    @GET("configfile/")
+    Observable<JsonObject> configFile();
 
 }
