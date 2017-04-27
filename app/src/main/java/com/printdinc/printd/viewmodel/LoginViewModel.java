@@ -96,6 +96,6 @@ public class LoginViewModel implements ViewModel {
 
     public void onClickCreateAccount(View view) {
         context.startActivity(CreateAccountActivity.newIntent(context));
-        activity.finish();
+//        activity.finish();
     }
 }

@@ -19,13 +19,13 @@ public class Printer {
     private String model;
     @SerializedName("x_size")
     @Expose
-    private String xSize;
+    private int xSize;
     @SerializedName("y_size")
     @Expose
-    private String ySize;
+    private int ySize;
     @SerializedName("z_size")
     @Expose
-    private String zSize;
+    private int zSize;
 
     public String getID() {
         return iD;
@@ -51,23 +51,23 @@ public class Printer {
         this.model = model;
     }
 
-    public String getXSize() {
+    public int getXSize() {
         return xSize;
     }
 
-    public void setXSize(String xSize) {
+    public void setXSize(int xSize) {
         this.xSize = xSize;
     }
 
-    public String getYSize() {
+    public int getYSize() {
         return ySize;
     }
 
-    public void setYSize(String ySize) {
+    public void setYSize(int ySize) {
         this.ySize = ySize;
     }
 
-    public String getZSize() {
+    public int getZSize() {
         return zSize;
     }
 }
