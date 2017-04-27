@@ -52,9 +52,9 @@ public class PrintStatusViewModel implements ViewModel {
 
         this.context = context;
         this.activity = activity;
-        completion = new ObservableField<String>("Loading...");
-        printTime = new ObservableField<String>("Loading...");
-        printTimeLeft = new ObservableField<String>("Loading...");
+        completion = new ObservableField<String>("");
+        printTime = new ObservableField<String>("");
+        printTimeLeft = new ObservableField<String>("");
         getJobStatus();
     }
 

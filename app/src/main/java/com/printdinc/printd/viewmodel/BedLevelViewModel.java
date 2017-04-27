@@ -134,6 +134,7 @@ public class BedLevelViewModel implements ViewModel {
                 });
     }
 
+
     private void firstStep() {
         PrintHeadCommand home_command = new PrintHeadCommand("home", new ArrayList<String>(Arrays.asList("x", "y", "z")), 0, 0, 0, false);
         doPrintHeadCommand(home_command);
