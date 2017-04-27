@@ -32,8 +32,8 @@
     <string name="errorbedleveling">Error bed leveling</string>
     <string name="errorbedleveling2">"There was an error bed leveling.\nMake sure your printer is turned on."</string>
     <string name="octoKey">OctoPrint API Key</string>
-    <string name="printerMake">3D Printer Make</string>
-    <string name="printerModel">3D Printer Model</string>
+    <string name="printerMake">Printer Make</string>
+    <string name="printerModel">Printer Model</string>
     <string name="createAccount">Create Account</string>
     <string name="loginButton">Login</string>
     <string name="thingiverseURI">http://www.thingiverse.com/</string>
