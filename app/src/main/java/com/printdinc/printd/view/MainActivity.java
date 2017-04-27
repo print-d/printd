@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         int x = item.getItemId();
 
         switch (item.getItemId()) {
-//            case R.id.action_settings:
-//                // User chose the "Settings" item, show the app settings UI...
-//                return true;
+            case R.id.action_settings:
+                this.startActivity(EditAccountActivity.newIntent(this));
+                return true;
 
             case R.id.action_help:
                 this.startActivity(HelpActivity.newIntent(this));

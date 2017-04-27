@@ -151,6 +151,19 @@
                 android:layout_gravity="center"
                 android:textColor="@color/primary" />
 
+            <Button
+                android:id="@+id/btn_profile"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:backgroundTint="@color/green"
+                android:clickable="true"
+                android:cursorVisible="true"
+                android:linksClickable="true"
+                android:onClick="@{viewModel.onClickConfigPrinter}"
+                android:text="@string/config_printer"
+                android:layout_gravity="center"
+                android:textColor="@color/white" />
+
         </TableLayout>
 
 
