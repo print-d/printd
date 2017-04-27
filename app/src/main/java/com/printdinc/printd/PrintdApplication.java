@@ -117,8 +117,9 @@ public class PrintdApplication extends Application {
 
             @Override
             public void onServiceResolved(NsdServiceInfo serviceInfo) {
-                Log.i("PrintApplication", "Resolved service " + serviceInfo.getServiceName());
+                Log.i("PrintApplication", "Resolved service " + serviceInfo.getHost().getHostAddress() + " " + serviceInfo.getHost().toString());
 
+                //if (serviceInfo.getServiceType())
                 // Have to use an async task to avoid setting something on a thread that doesn't own it
                 new PrintdApplication.AddNsdServiceInfoTask().execute(new NewNSDInfo(serviceInfo));
             }
