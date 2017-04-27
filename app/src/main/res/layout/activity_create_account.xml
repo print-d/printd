@@ -15,7 +15,9 @@
         tools:context=".MainActivity"
         android:background="@color/primary"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -164,15 +166,19 @@
                             android:textColor="@color/white"
                             android:textSize="20sp" />
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white">
                         <Spinner
                             android:id="@+id/makeSpinner"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/white"
                             android:entries="@{viewModel.makeEntries}"
                             android:padding="10dp"
                             android:fontFamily="sans-serif"
                             android:selectedItemPosition="@={viewModel.selectedMakePosition}" />
+                            </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
@@ -193,15 +199,19 @@
                             android:textColor="@color/white"
                             android:textSize="20sp" />
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white">
                         <Spinner
                             android:id="@+id/modelSpinner"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/white"
                             android:entries="@{viewModel.modelEntries}"
                             android:padding="10dp"
                             android:fontFamily="sans-serif"
                             android:selectedItemPosition="@={viewModel.selectedModelPosition}" />
+                            </LinearLayout>
 
                     </LinearLayout>
 

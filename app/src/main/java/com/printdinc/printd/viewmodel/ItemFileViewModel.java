@@ -19,9 +19,11 @@ import com.printdinc.printd.R;
 import com.printdinc.printd.model.ConnectionState;
 import com.printdinc.printd.model.ConnectionStateState;
 import com.printdinc.printd.model.Position;
+import com.printdinc.printd.model.Printer;
 import com.printdinc.printd.model.SimpleCommand;
 import com.printdinc.printd.model.SliceCommand;
 import com.printdinc.printd.model.ThingiverseThingFile;
+import com.printdinc.printd.service.HerokuService;
 import com.printdinc.printd.service.OctoprintService;
 import com.printdinc.printd.service.ThingiverseService;
 import com.printdinc.printd.view.MainActivity;
@@ -83,7 +85,7 @@ public class ItemFileViewModel extends BaseObservable implements ViewModel {
                         progressDialog.setMessage("Sending to printer...");
                         progressDialog.setProgressStyle(progressDialog.STYLE_HORIZONTAL);
                         progressDialog.setProgress(0);
-                        progressDialog.setMax(5);
+                        progressDialog.setMax(6);
                         progressDialog.setCancelable(false);
                         progressDialog.setCanceledOnTouchOutside(false);
                         progressDialog.show();
@@ -393,8 +395,7 @@ public class ItemFileViewModel extends BaseObservable implements ViewModel {
 
                     progressDialog.incrementProgressBy(1);
 
-                    //TODO use positions from Heroku Server
-                    printItem(context.getString(R.string.stlname), new Position(100l,100l));
+                    getDimensionsAndPrint();
                 }
 
                 @Override
@@ -408,6 +409,41 @@ public class ItemFileViewModel extends BaseObservable implements ViewModel {
         catch (Exception e) {
             Object a = e;
         }
+    }
+
+    public void getDimensionsAndPrint() {
+
+        progressDialog.setMessage("Retrieving printer dimensions...");
+
+        if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
+        PrintdApplication application = PrintdApplication.get(context);
+        HerokuService herokuService = application.getHerokuService();
+        subscription = herokuService.printerDimensions()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(application.defaultSubscribeScheduler())
+                .subscribe(new Subscriber<Printer>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.e(TAG, "completed!");
+                    }
+
+                    @Override
+                    public void onError(Throwable error) {
+                        Log.e(TAG, "Error printing", error);
+                        errorPrinting();
+                    }
+
+                    @Override
+                    public void onNext(Printer p) {
+
+                        progressDialog.incrementProgressBy(1);
+
+                        printItem(context.getString(R.string.stlname), new Position(p.getXSize() / 2, p.getYSize() / 2));
+
+                        Log.i(TAG, "ResponseBody loaded " + p.toString());
+                    }
+                });
+
     }
 
     public static String getMimeType(String url) {

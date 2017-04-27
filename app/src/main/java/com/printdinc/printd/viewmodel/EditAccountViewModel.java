@@ -114,10 +114,16 @@ public class EditAccountViewModel implements ViewModel{
                                     public void onNext(User user) {
                                         Log.i(TAG, "ResponseBody loaded");
                                         apiText.set(user.getOP_APIKey());
-                                        selectedMakePosition2.set(printerList.indexOf(user.getMake()));
-                                        selectedModelPosition2.set(printerList.indexOf(user.getModel()));
+                                        for (int i = 0; i < printerList.size(); i++) {
+                                            Printer currPrinter = printerList.get(i);
+                                            if (user.getMake().equals(currPrinter.getMake())) {
+                                                selectedMakePosition2.set(i);
+                                            }
+                                            if (user.getModel().equals(currPrinter.getModel())) {
+                                                selectedModelPosition2.set(i);
+                                            }
 
-
+                                        }
                                     }
                                 });
                     }

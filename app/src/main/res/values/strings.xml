@@ -35,6 +35,7 @@
     <string name="printerMake">Printer Make</string>
     <string name="printerModel">Printer Model</string>
     <string name="createAccount">Create Account</string>
+    <string name="editAccount">Edit Account</string>
     <string name="loginButton">Login</string>
     <string name="thingiverseURI">http://www.thingiverse.com/</string>
     <string name="yes">Yes</string>
