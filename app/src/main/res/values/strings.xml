@@ -67,4 +67,7 @@
     <string name="login">Login</string>
     <string name="title_activity_login">Sign in</string>
 
+
+    <string name="client_id">cc43e5f8f872869cbb07</string>
+    <string name="redirect_uri">print-d://authRequestResponse</string>
 </resources>

@@ -8,6 +8,7 @@ import com.printdinc.printd.model.PrinterData;
 import com.printdinc.printd.model.User;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -42,5 +43,8 @@ public interface HerokuService {
 
     @GET("configfile/")
     Observable<JsonObject> configFile();
+
+    @POST("authenticatethingiverse/")
+    Observable<String> authenticateThingiverse(@Body Map<String, String> body);
 
 }

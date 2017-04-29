@@ -16,23 +16,6 @@
         android:orientation="vertical"
         tools:activity=".MainActivity">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/primary"
-                android:minHeight="?attr/actionBarSize"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
-        </android.support.design.widget.AppBarLayout>
-
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/myFAB"
             android:layout_width="wrap_content"
@@ -55,13 +38,30 @@
             android:layout_centerHorizontal="true" />
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/primary"
-        android:orientation="vertical"
-        android:gravity="center">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/primary"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/appbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/primary"
+                    android:minHeight="?attr/actionBarSize"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+            </android.support.design.widget.AppBarLayout>
 
         <ImageView
             android:id="@+id/main_logo"
@@ -69,6 +69,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:layout_centerInParent="true"
+            android:paddingTop="25dp"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
 

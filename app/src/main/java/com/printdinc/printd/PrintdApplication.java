@@ -12,8 +12,6 @@ import com.printdinc.printd.model.NewNSDInfo;
 import com.printdinc.printd.service.HerokuService;
 import com.printdinc.printd.service.HerokuServiceGenerator;
 import com.printdinc.printd.service.OctoprintService;
-import com.printdinc.printd.service.ThingiverseAuthService;
-import com.printdinc.printd.service.ThingiverseAuthServiceGenerator;
 import com.printdinc.printd.service.ThingiverseService;
 import com.printdinc.printd.service.ThingiverseServiceGenerator;
 
@@ -23,7 +21,7 @@ import rx.schedulers.Schedulers;
 public class PrintdApplication extends Application {
 
     private ThingiverseService thingiverseService;
-    private ThingiverseAuthService thingiverseAuthService;
+//    private ThingiverseAuthService thingiverseAuthService;
     private HerokuService herokuService;
     private OctoprintService octoprintService;
     private Scheduler defaultSubscribeScheduler;
@@ -202,13 +200,13 @@ public class PrintdApplication extends Application {
         return thingiverseService;
     }
 
-    public ThingiverseAuthService getThingiverseAuthService() {
-        if (thingiverseAuthService == null) {
-            thingiverseAuthService =
-                    ThingiverseAuthServiceGenerator.createService(ThingiverseAuthService.class);
-        }
-        return thingiverseAuthService;
-    }
+//    public ThingiverseAuthService getThingiverseAuthService() {
+//        if (thingiverseAuthService == null) {
+//            thingiverseAuthService =
+//                    ThingiverseAuthServiceGenerator.createService(ThingiverseAuthService.class);
+//        }
+//        return thingiverseAuthService;
+//    }
 
     public OctoprintService getOctoprintService() {
 //        if (octoprintService == null) {
@@ -225,9 +223,9 @@ public class PrintdApplication extends Application {
     public void setHerokuService(HerokuService herokuService) {
         this.herokuService = herokuService;
     }
-    public void setThingiverseAuthService(ThingiverseAuthService thingiverseAuthService) {
-        this.thingiverseAuthService = thingiverseAuthService;
-    }
+//    public void setThingiverseAuthService(ThingiverseAuthService thingiverseAuthService) {
+//        this.thingiverseAuthService = thingiverseAuthService;
+//    }
     public void setOctoprintService(OctoprintService octoprintService) {
         this.octoprintService = octoprintService;
     }

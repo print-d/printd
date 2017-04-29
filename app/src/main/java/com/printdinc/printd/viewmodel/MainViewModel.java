@@ -17,7 +17,6 @@ import com.printdinc.printd.model.User;
 import com.printdinc.printd.service.HerokuService;
 import com.printdinc.printd.service.OctoprintService;
 import com.printdinc.printd.service.OctoprintServiceGenerator;
-import com.printdinc.printd.service.ThingiverseAuthService;
 import com.printdinc.printd.service.ThingiverseAuthServiceGenerator;
 import com.printdinc.printd.service.ThingiverseService;
 import com.printdinc.printd.service.ThingiverseServiceGenerator;
@@ -25,6 +24,8 @@ import com.printdinc.printd.view.BedLevelActivity;
 import com.printdinc.printd.view.PrintStatusActivity;
 import com.printdinc.printd.view.ThingiverseCollectionsActivity;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,7 +46,7 @@ public class MainViewModel implements ViewModel {
 
     public ObservableInt progressVisibility;
 
-    Pattern token_parse = Pattern.compile("access_token=(.+?)&token_type=(\\w+)");
+    Pattern token_parse = Pattern.compile("(.+?)&token_type=?(\\w*)");
 
 
     public MainViewModel(Context context) {
@@ -71,10 +72,13 @@ public class MainViewModel implements ViewModel {
                 if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
 
                 PrintdApplication application = PrintdApplication.get(context);
-                ThingiverseAuthService thingiverseAuthService = application.getThingiverseAuthService();
+                HerokuService herokuService = application.getHerokuService();
+
+                Map<String, String> m = new HashMap<String, String>();
+                m.put("code", code);
 
                 //TODO reshape this call to be to Heroku server instead of thingiverse
-                subscription = thingiverseAuthService.getAccessToken(context.getString(R.string.client_id), context.getString(R.string.client_secret), code)
+                subscription = herokuService.authenticateThingiverse(m)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(application.defaultSubscribeScheduler())
                         .subscribe(new Subscriber<String>() {
@@ -101,7 +105,7 @@ public class MainViewModel implements ViewModel {
                                     {
                                         PrintdApplication.get(context)
                                                 .setThingiverseService(ThingiverseServiceGenerator
-                                                        .createService(ThingiverseService.class, m.group(2) + " " + m.group(1)));
+                                                        .createService(ThingiverseService.class, "Bearer" + " " + m.group(1)));
                                     }
 
                                     octoprintInit(ThingiverseCollectionsActivity.newIntent(context));

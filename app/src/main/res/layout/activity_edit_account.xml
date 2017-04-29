@@ -209,7 +209,7 @@
                             android:cursorVisible="true"
                             android:linksClickable="true"
                             android:onClick="@{viewModel.onClickComplete}"
-                            android:text="@string/createAccount"
+                            android:text="Edit Account"
                             android:textColor="@color/primary" />
                     </LinearLayout>
 
